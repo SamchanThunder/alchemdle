@@ -79,7 +79,7 @@ export default function Game() {
     setStats(load(c.store + "stats", EMPTY_STATS));
     setLoadError(false);
     const get = (d: string) =>
-      fetch(indexUrl(d)).then((r) => {
+      fetch(indexUrl(d), { cache: "no-cache" }).then((r) => {
         if (!r.ok) throw new Error(String(r.status));
         return r.json() as Promise<PuzzleIndex>;
       });
@@ -119,7 +119,7 @@ export default function Game() {
     setHover(null);
     setBursts([]);
     window.clearTimeout(winTimer.current);
-    fetch(puzzleUrl(dir, sel.n))
+    fetch(puzzleUrl(dir, sel.n), { cache: "no-cache" })
       .then((r) => {
         if (!r.ok) throw new Error(String(r.status));
         return r.json();

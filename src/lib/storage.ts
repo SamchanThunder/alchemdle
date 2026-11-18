@@ -1,6 +1,6 @@
 // bump the version to wipe everyone's saved stats and runs
-const PREFIX = "alchemdle:v2:";
-const OLD = ["alchemdle:v1:"];
+const PREFIX = "alchemdle:v3:";
+const OLD = ["alchemdle:v1:", "alchemdle:v2:"];
 
 let cleaned = false;
 function dropOld() {

@@ -2387,9 +2387,14 @@ html[data-mode="brainrot"] .title {
   filter: drop-shadow(0 2px 0 #3a0f63) drop-shadow(0 0 18px rgba(255, 62, 165, 0.35));
 }
 
+/* room above the title for the sticker */
+.app.mode-brainrot {
+  padding-top: calc(max(10px, env(safe-area-inset-top)) + 22px);
+}
+
 .title-sticker {
   position: absolute;
-  top: -12px;
+  top: -6px;
   right: -34px;
   padding: 2px 8px 3px;
   border-radius: 6px;
@@ -2461,8 +2466,11 @@ html[data-mode="brainrot"] .win-brewed-label {
 }
 
 @media (max-width: 640px) {
+  .app.mode-brainrot {
+    padding-top: calc(env(safe-area-inset-top, 0px) + 34px);
+  }
   .title-sticker {
-    top: -16px;
+    top: -6px;
     right: -22px;
     font-size: 9px;
     padding: 1px 5px 2px;
