@@ -2,30 +2,19 @@ export default function HelpPanel({ onClose }: { onClose: () => void }) {
   return (
     <div className="help">
       <h2 className="panel-title">How to Brew</h2>
-      <p className="lede">
-        Each day brings one target element, today’s brew. Combine the ingredients on your workbench to make it.
-      </p>
+      <p className="lede">Combine ingredients to make today’s brew.</p>
       <ul className="rules">
         <li>
-          <b>Drag</b> one ingredient onto another, or <b>tap</b> two in turn, to merge them. Both are used up and what
-          they make appears in their place.
+          <b>Drag</b> one ingredient onto another (or <b>tap</b> two) to merge them.
         </li>
         <li>
-          <b>Ingredients</b> (the number on the brew card) are the items you start with. Each is a single copy. Some are
-          red herrings you won’t need.
+          Match the <b>Goal</b>, the fewest merges possible, for ★★★.
         </li>
+        <li>Pairs that don’t react are free. Some ingredients are decoys.</li>
         <li>
-          <b>Goal</b> is the fewest merges the brew can possibly be made in. Match it for the top title. Every
-          extra merge counts against you.
+          Stuck? <b>Reset</b> the board. Your merges still count.
         </li>
-        <li>
-          Pairs that <b>fizzle</b> (don’t react) cost nothing, so experiment freely.
-        </li>
-        <li>An element can react with itself, but only if you hold two copies.</li>
-        <li>
-          Painted into a corner? <b>Reset</b> brings back the starting ingredients. Your merge count carries on.
-        </li>
-        <li>A new brew bubbles up every day at local midnight. Past brews wait in the archive for practice.</li>
+        <li>New brew every day at midnight.</li>
       </ul>
       <div className="panel-actions">
         <button className="btn btn-primary" onClick={onClose}>

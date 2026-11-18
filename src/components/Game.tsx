@@ -6,7 +6,7 @@ import { indexUrl, puzzleUrl } from "@/lib/config";
 import { formatDate, todayPuzzleNumber } from "@/lib/date";
 import { freshBoard, hasMoves, newRun, pairKey, reactionTable, stars } from "@/lib/game";
 import { load, save } from "@/lib/storage";
-import { alchemyTitle } from "@/lib/titles";
+import { rating, starText } from "@/lib/titles";
 import type { PuzzleBundle, PuzzleIndex, Run, Stats } from "@/lib/types";
 import ElementIcon from "./ElementIcon";
 import Modal from "./Modal";
@@ -85,10 +85,6 @@ export default function Game() {
         setIndex(idx);
         setTodayN(t);
         setSel({ n, practice: n !== t || params.has("practice") });
-        if (!load("seenHelp", false)) {
-          setPanel("help");
-          save("seenHelp", true);
-        }
       })
       .catch(() => setLoadError(true));
   }, []);
@@ -179,7 +175,7 @@ export default function Game() {
 
   // ---- actions ---------------------------------------------------------------
   function recordWin(p: PuzzleBundle, r: Run) {
-    const title = alchemyTitle(r.merges, p.par, p.complexity);
+    const rate = rating(r.merges, p.par);
     const s: Stats = JSON.parse(JSON.stringify(stats));
     const key = String(p.n);
     const prev = s.results[key];
@@ -193,7 +189,7 @@ export default function Game() {
       s.dist[bucket] = (s.dist[bucket] ?? 0) + 1;
     }
     if (!prev || r.merges < prev.merges) {
-      s.results[key] = { merges: r.merges, par: p.par, title: title.name, daily: isDaily || !!prev?.daily };
+      s.results[key] = { merges: r.merges, par: p.par, title: `${starText(rate.stars)} ${rate.verdict}`, daily: isDaily || !!prev?.daily };
     } else if (isDaily && !prev.daily) {
       s.results[key] = { ...prev, daily: true };
     }
@@ -369,7 +365,6 @@ export default function Game() {
   // ---- render --------------------------------------------------------------------
   const dateLabel = puzzle ? formatDate(puzzle.date) : "";
   const modeLabel = sel?.practice ? "PRACTICE" : "DAILY";
-  const winTitle = puzzle && run?.won ? alchemyTitle(run.merges, puzzle.par, puzzle.complexity) : null;
 
   return (
     <main className="app">
@@ -529,7 +524,7 @@ export default function Game() {
           {run?.won && panel !== "win" && (
             <div className="won-bar">
               <button className="btn btn-primary" onClick={() => setPanel("win")}>
-                {winTitle?.emoji} See your result
+                ★ See your result
               </button>
             </div>
           )}
