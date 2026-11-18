@@ -200,6 +200,12 @@ def fetch(rel: str, offline: bool) -> str:
     return path
 
 
+def recipe_key(a: str, b: str, c: str) -> str:
+    """Name key used in data/recipe_review.json."""
+    x, y = sorted((a, b), key=str.lower)
+    return f"{x} + {y} = {c}"
+
+
 def load_json(path):
     with open(path, encoding="utf-8") as f:
         return json.load(f)
@@ -536,6 +542,16 @@ def build_catalogue(items, pop, match, chosen, rec, base_idx, icons: IconIndex):
     if skipped:
         log("  skipped:", ", ".join(skipped))
 
+    # remove recipes marked "drop" in data/recipe_review.json
+    review_path = os.path.join(DATA, "recipe_review.json")
+    drop = set(load_json(review_path).get("drop", [])) if os.path.exists(review_path) else set()
+    if drop:
+        name = lambda i: elements[i]["name"]
+        bad = [k for k, c in recipes.items() if recipe_key(name(k[0]), name(k[1]), name(c)) in drop]
+        for k in bad:
+            del recipes[k]
+        log(f"review: dropped {len(bad)} recipes")
+
     # fewest crafts from the base four
     nbr = collections.defaultdict(list)
     for (a, b), c in recipes.items():
@@ -672,6 +688,21 @@ class Solver:
                 trees |= {t for e, t in build(mask) if e == target}
         return trees
 
+    def tree_steps(self, tree):
+        """(x, y, result) for every merge in a recipe tree."""
+        steps = []
+
+        def walk(t):
+            if isinstance(t, int):
+                return t
+            x, y = walk(t[0]), walk(t[1])
+            c = self.react(x, y)
+            steps.append((x, y, c))
+            return c
+
+        walk(tree)
+        return steps
+
     # ---- double checks
     def replay(self, tokens, path, target) -> int:
         """Replays the path. Returns the merge count."""
@@ -725,7 +756,8 @@ class Solver:
 # 5. puzzle generator
 # ============================================================================
 class Generator:
-    def __init__(self, elements, recipes, nbr, seed):
+    def __init__(self, elements, recipes, nbr, seed, approved=None):
+        self.approved = approved   # reviewed "keep" pairs; winning paths stick to these
         self.E = elements
         self.recipes = recipes
         self.nbr = nbr
@@ -781,7 +813,7 @@ class Generator:
             interior.add(x)
         return leaves
 
-    def make(self, par, n_tokens, used_targets, used_boards, day, cooldown, tries=4000):
+    def make(self, par, n_tokens, used_targets, used_boards, day, cooldown, tries=4000, strict=True):
         rng = self.rng
         n_distractors = n_tokens - par - 1
         if n_distractors < 0:
@@ -811,10 +843,14 @@ class Generator:
             sol = self.solver.solve(tokens, target)
             if not sol or not (PAR_MIN <= sol["par"] <= PAR_MAX) or sol["par"] != par:
                 continue
-            paths = len(self.solver.distinct_trees(tokens, target))
-            if paths < MIN_PATHS:                             # need more than one way to win
+            trees = self.solver.distinct_trees(tokens, target)
+            if len(trees) < MIN_PATHS:                        # need more than one way to win
                 continue
-            sol["distinct_paths"] = paths
+            if strict and self.approved and any(
+                    (min(x, y), max(x, y)) not in self.approved
+                    for t in trees for x, y, _ in self.solver.tree_steps(t)):
+                continue                                      # every winning step must be reviewed
+            sol["distinct_paths"] = len(trees)
             n_react = len(sol["reactions"])
             if n_react < len(tokens) + par:                   # board must be playful, not a corridor
                 continue
@@ -901,9 +937,15 @@ def main():
     log(f"wrote {len(elements)} elements, {len(rec_list)} recipes")
 
     # ---- puzzles ---------------------------------------------------------------------------
-    gen = Generator(elements, recipes, nbr, args.seed)
+    review_path = os.path.join(DATA, "recipe_review.json")
+    keep = set(load_json(review_path).get("keep", [])) if os.path.exists(review_path) else set()
+    nm = lambda i: elements[i]["name"]
+    approved = {k for k, c in recipes.items() if recipe_key(nm(k[0]), nm(k[1]), nm(c)) in keep}
+    log(f"review: {len(approved)} approved recipes for winning paths")
+    gen = Generator(elements, recipes, nbr, args.seed, approved)
     start = dt.date.fromisoformat(args.start)
     used_targets, used_boards, puzzles = {}, set(), []
+    unreviewed_days = 0
     for day in range(args.days):
         date = start + dt.timedelta(days=day)
         par, n_tok = WEEKDAY_PLAN[date.weekday()]
@@ -913,9 +955,14 @@ def main():
         attempts = [(par, n_tok, TARGET_COOLDOWN_DAYS), (par, MIN_TOKENS + MAX_TOKENS - n_tok, TARGET_COOLDOWN_DAYS),
                     (other, MAX_TOKENS, TARGET_COOLDOWN_DAYS), (par, n_tok, 30), (par, MAX_TOKENS, 0),
                     (other, MAX_TOKENS, 0)]
-        for p, nt, cd in attempts:
-            made = gen.make(p, nt, used_targets, used_boards, day, cd)
+        # reviewed recipes only first, then anything as a last resort
+        for strict in (True, False):
+            for p, nt, cd in attempts:
+                made = gen.make(p, nt, used_targets, used_boards, day, cd, strict=strict)
+                if made:
+                    break
             if made:
+                unreviewed_days += not strict
                 break
         if not made:
             log(f"!! could not generate puzzle for {date}")
@@ -961,6 +1008,7 @@ def main():
         else:
             assert r == pz["par"], (pz["number"], r, pz["par"])
             bfs_confirmed += 1
+    log(f"review: {unreviewed_days} puzzles needed unreviewed recipes (run scripts/review_recipes.py)")
     log(f"verified {len(puzzles)} puzzles: replay OK for all; independent multiset BFS confirmed par "
         f"on {bfs_confirmed} (state cap hit on {bfs_skipped}, covered by exact lattice solver)")
 
