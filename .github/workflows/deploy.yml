@@ -1,0 +1,53 @@
+name: Deploy
+
+# Builds the site and publishes it to the root of the gh-pages branch.
+# Pages setting: Deploy from a branch -> gh-pages -> / (root)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build
+        env:
+          # optional repo variable, set to "/" for a custom domain
+          BASE_PATH_OVERRIDE: ${{ vars.BASE_PATH }}
+        run: |
+          REPO="${GITHUB_REPOSITORY#*/}"
+          if [ -n "$BASE_PATH_OVERRIDE" ]; then BASE="$BASE_PATH_OVERRIDE"
+          elif [[ "$REPO" == *.github.io ]]; then BASE=""
+          else BASE="/$REPO"; fi
+          [ "$BASE" = "/" ] && BASE=""
+          echo "base path: '$BASE'"
+          NEXT_PUBLIC_BASE_PATH="$BASE" npm run build
+          touch out/.nojekyll
+
+      - name: Push to gh-pages
+        run: |
+          cd out
+          git init -q -b gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Deploy ${GITHUB_SHA::7}"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" gh-pages
