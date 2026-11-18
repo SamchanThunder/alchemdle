@@ -15,7 +15,7 @@ export default function HelpPanel({ onClose }: { onClose: () => void }) {
           red herrings you won’t need.
         </li>
         <li>
-          <b>Best</b> is the fewest merges the brew can possibly be made in. Match it for the top title. Every
+          <b>Goal</b> is the fewest merges the brew can possibly be made in. Match it for the top title. Every
           extra merge counts against you.
         </li>
         <li>

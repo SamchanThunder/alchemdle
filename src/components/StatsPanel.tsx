@@ -26,16 +26,16 @@ export default function StatsPanel({ stats, todayN }: { stats: Stats; todayN: nu
         </div>
         <div className="stat">
           <b>{parRate}%</b>
-          <span>Hit best</span>
+          <span>Hit goal</span>
         </div>
       </div>
-      <h3 className="panel-sub">Merges over best</h3>
+      <h3 className="panel-sub">Merges over goal</h3>
       <div className="dist">
         {BUCKETS.map((b) => {
           const v = stats.dist[b] ?? 0;
           return (
             <div className="dist-row" key={b}>
-              <span className="dist-label">{b === "0" ? "Best" : `+${b}`}</span>
+              <span className="dist-label">{b === "0" ? "Goal" : `+${b}`}</span>
               <span className="dist-track">
                 <span className={`dist-bar${v ? "" : " empty"}`} style={{ width: `${Math.max(9, (v / max) * 100)}%` }}>
                   {v}

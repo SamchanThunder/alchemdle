@@ -1,6 +1,6 @@
 # Alchemdle
 
-A daily alchemy merge puzzle. Players combine starting ingredients to make a target element in as few merges as possible. Each puzzle has a par (shown in-game as "Best"), the proven minimum number of merges.
+A daily alchemy merge puzzle. Players combine starting ingredients to make a target element in as few merges as possible. Each puzzle has a par (shown in-game as "Goal"), the proven minimum number of merges.
 
 Built as a static Next.js site. Puzzle generation and solving happen ahead of time in a Python pipeline, so the client only fetches a small JSON file per day.
 

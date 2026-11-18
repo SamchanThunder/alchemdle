@@ -39,7 +39,7 @@ export default function ArchivePanel({ index, todayN, current, stats, onPick }: 
                 <span className="archive-main">
                   <span className="archive-name">{p.target}</span>
                   <span className="archive-date">
-                    {p.n === todayN ? "Today" : formatDate(p.date)} · best {p.par} ·{" "}
+                    {p.n === todayN ? "Today" : formatDate(p.date)} · goal {p.par} ·{" "}
                     <span className="stars">{stars(p.difficulty)}</span>
                   </span>
                 </span>

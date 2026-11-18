@@ -69,11 +69,11 @@ export default function WinPanel({ puzzle, run, practice, name, icon, onPlayAgai
         </div>
         <div className="stat">
           <b>{puzzle.par}</b>
-          <span>Best</span>
+          <span>Goal</span>
         </div>
         <div className="stat">
           <b>{over === 0 ? "±0" : `+${over}`}</b>
-          <span>Over best</span>
+          <span>Over goal</span>
         </div>
         <div className="stat">
           <b>

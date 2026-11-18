@@ -286,7 +286,14 @@ export default function Game() {
   }
 
   // ---- pointer dragging --------------------------------------------------------
-  function findDropTarget(x: number, y: number, self: number): number | null {
+  // merge when the dragged icon's shadow overlaps another icon's shadow
+  function findDropTarget(self: number): number | null {
+    const me = glyphRect(self);
+    const glyph = tokenEls.current.get(self)?.querySelector<HTMLElement>(".glyph")?.offsetWidth ?? 64;
+    if (!me) return null;
+    const x = me.left + me.width / 2;
+    const y = me.top + me.height / 2;
+    const reach = glyph * 1.5;
     let best: number | null = null;
     let bestD = Infinity;
     tokenEls.current.forEach((_, uid) => {
@@ -294,7 +301,7 @@ export default function Game() {
       const r = glyphRect(uid);
       if (!r) return;
       const d = Math.hypot(x - (r.left + r.width / 2), y - (r.top + r.height / 2));
-      if (d < r.width * 0.75 && d < bestD) {
+      if (d < reach && d < bestD) {
         best = uid;
         bestD = d;
       }
@@ -320,7 +327,7 @@ export default function Game() {
       setSelected(null);
     }
     d.el.style.transform = `translate(${dx}px, ${dy}px)`;
-    const target = findDropTarget(e.clientX, e.clientY, d.uid);
+    const target = findDropTarget(d.uid);
     setHover((h) => (h === target ? h : target));
   }
 
@@ -337,6 +344,8 @@ export default function Game() {
         duration: 260,
         easing: "cubic-bezier(.2,.9,.3,1.2)",
       });
+    // pick the target while the token is still at its dropped position
+    const target = d.moved && !cancelled ? findDropTarget(d.uid) : null;
     d.el.style.transform = "";
     if (!d.moved) {
       if (!cancelled) tap(d.uid);
@@ -346,7 +355,6 @@ export default function Game() {
       glide();
       return;
     }
-    const target = findDropTarget(e.clientX, e.clientY, d.uid);
     if (target != null) {
       if (!attemptMerge(d.uid, target)) glide(); // fizzled: float back home
       return;
@@ -440,8 +448,8 @@ export default function Game() {
                 {run?.merges ?? "–"}
               </span>
             </div>
-            <div className="plaque" title="Best: the fewest merges this brew can be made in">
-              <span className="plaque-label">Best</span>
+            <div className="plaque" title="Goal: the fewest merges this brew can be made in">
+              <span className="plaque-label">Goal</span>
               <span className="plaque-value">{puzzle?.par ?? "–"}</span>
             </div>
           </div>
