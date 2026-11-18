@@ -439,7 +439,7 @@ export default function Game() {
             </button>
             <div className="plaque">
               <span className="plaque-label">Merges</span>
-              <span className={`plaque-value${run && puzzle && run.merges > puzzle.par ? " over" : ""}`}>
+              <span className={`plaque-value${run && puzzle && run.merges > puzzle.par * 3 ? " over-red" : run && puzzle && run.merges > puzzle.par ? " over" : ""}`}>
                 {run?.merges ?? "–"}
               </span>
             </div>

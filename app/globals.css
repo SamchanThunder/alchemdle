@@ -345,7 +345,11 @@ a {
 }
 
 .plaque-value.over {
-  color: #9a3b1f;
+  color: #c28a00;
+}
+
+.plaque-value.over-red {
+  color: #b3261e;
 }
 
 .plaque-glyph {
