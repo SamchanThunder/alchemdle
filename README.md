@@ -1,5 +1,7 @@
 # Alchemdle
 
+https://samchanthunder.github.io/alchemdle/
+
 A daily alchemy puzzle. Every day you get a target element (say, Goldfish) and a handful of starting ingredients. Drag one onto another to combine them, keep going until you make the target, and try to do it in as few merges as possible. Every puzzle has a par, the minimum number of merges it can be solved in, so it plays a bit like golf crossed with Wordle.
 
 It's a static Next.js site. All the heavy lifting (building the recipe graph, generating puzzles, proving par) happens ahead of time in a Python pipeline. The client just fetches a small JSON file for the day and plays.
