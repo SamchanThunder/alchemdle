@@ -22,10 +22,11 @@ function mulberry32(a: number) {
 /** Starting spots (0-1 fractions): a ring if it fits, else a loose grid. */
 export function scatter(n: number, w: number, h: number, seed: number): { x: number; y: number }[] {
   const rnd = mulberry32(seed);
-  const rx = 0.36;
-  const ry = 0.34;
-  const a = rx * w;
-  const b = ry * h;
+  // ring radius in px, capped so big screens keep tokens close together
+  const a = Math.min(0.36 * w, 250);
+  const b = Math.min(0.34 * h, 190);
+  const rx = a / w;
+  const ry = b / h;
   const perimeter = Math.PI * (3 * (a + b) - Math.sqrt((3 * a + b) * (a + 3 * b)));
   if (n > 1 && perimeter / n >= 104 && b >= 80) {
     const off = -Math.PI / 2 + (rnd() - 0.5) * 0.4;
@@ -94,21 +95,30 @@ export function contributingMerges(log: LogEntry[], winUid: number | null): Set<
   return used;
 }
 
-/** Share grid: 🟨 used in the final brew, 🟪 detour, one row per reset. */
-export function shareGrid(run: Run): string[] {
+const ROW = 10;
+
+/** Share grid, max 2 rows. 🟨 fed the final brew, 🟪 detour. Resets are counted, not drawn. */
+export function shareGrid(run: Run): { rows: string[]; resets: number } {
   const used = contributingMerges(run.log, run.winUid);
-  const rows: string[] = [];
-  let row = "";
+  const marks: boolean[] = [];
+  let resets = 0;
   run.log.forEach((e, i) => {
-    if ("reset" in e) {
-      rows.push(row ? `${row} 🔄` : "🔄");
-      row = "";
-    } else {
-      row += used.has(i) ? "🟨" : "🟪";
-    }
+    if ("reset" in e) resets++;
+    else marks.push(used.has(i));
   });
-  if (row) rows.push(row);
-  return rows;
+  let cells: string[];
+  if (marks.length <= ROW) {
+    // one emoji per merge, in play order
+    cells = marks.map((u) => (u ? "🟨" : "🟪"));
+  } else {
+    // too many to draw: squash detours, keep the winning merges
+    const gold = marks.filter(Boolean).length;
+    const purple = Math.min(marks.length - gold, 2 * ROW - gold);
+    cells = [...Array<string>(purple).fill("🟪"), ...Array<string>(gold).fill("🟨")];
+  }
+  const half = Math.ceil(cells.length / 2);
+  const rows = cells.length <= ROW ? [cells.join("")] : [cells.slice(0, half).join(""), cells.slice(half).join("")];
+  return { rows, resets };
 }
 
 export const stars = (n: number) => "★".repeat(n) + "☆".repeat(Math.max(0, 5 - n));

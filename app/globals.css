@@ -665,10 +665,10 @@ a {
   /* wood grain */
   background-color: #8a5a32;
   background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.004 0.09' numOctaves='4' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 0.24  0 0 0 0 0.12  0 0 0 0 0.04  0 0 0 1.1 -0.32'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='600'%3E%3Cfilter id='g' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.004 0.09' numOctaves='4' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.24  0 0 0 0 0.12  0 0 0 0 0.04  0 0 0 1.1 -0.32'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"),
     repeating-linear-gradient(180deg, transparent 0 96px, rgba(40, 18, 4, 0.35) 96px 98px, rgba(255, 220, 170, 0.08) 98px 99px),
     linear-gradient(180deg, #9c6a3c, #845530 60%, #6e4426);
-  background-size: 600px 300px, auto, auto;
+  background-size: 1200px 600px, auto, auto;
   box-shadow:
     inset 0 0 0 2px rgba(40, 18, 4, 0.5),
     inset 0 10px 24px rgba(30, 12, 0, 0.45),
@@ -774,8 +774,8 @@ a {
 
 /* tokens: transparent, sitting right on the wood */
 .token {
-  --glyph: 64px;
-  --tw: 108px;
+  --glyph: 82px;
+  --tw: 136px;
   position: absolute;
   left: clamp(calc(var(--tw) / 2), calc(var(--x) * 100%), calc(100% - var(--tw) / 2));
   top: clamp(calc(var(--glyph) / 2 + 8px), calc(var(--y) * 100%), calc(100% - var(--glyph) / 2 - 26px));
@@ -873,8 +873,8 @@ a {
 .token-label {
   max-width: 100%;
   color: #fcefd0;
-  font-weight: 600;
-  font-size: 15px;
+  font-weight: 700;
+  font-size: 18px;
   line-height: 1.1;
   letter-spacing: 0.01em;
   text-align: center;
@@ -1839,4 +1839,191 @@ a {
 
 .credit-list a {
   color: #7a4e17;
+}
+
+/* ---------- wider screens: bigger HUD ---------------------------------- */
+
+@media (min-width: 641px) {
+  .icon-btn {
+    width: 52px;
+    height: 52px;
+    font-size: 24px;
+  }
+  .icon-btn svg {
+    width: 26px;
+    height: 26px;
+  }
+  .hud-icons {
+    gap: 10px;
+  }
+  .subtitle {
+    font-size: 16px;
+  }
+  .plaques {
+    gap: 14px;
+  }
+  .plaque {
+    min-width: 122px;
+    padding: 9px 26px 10px;
+  }
+  .plaque::before {
+    left: 8px;
+  }
+  .plaque::after {
+    right: 8px;
+  }
+  .plaque-label {
+    font-size: 14px;
+  }
+  .plaque-value {
+    font-size: 34px;
+  }
+  .plaque-glyph {
+    font-size: 31px;
+  }
+}
+
+/* ---------- results panel: compact, fits without scrolling -------------- */
+
+.modal:has(.win) {
+  width: min(100%, 600px);
+  padding: 18px 20px 16px;
+}
+
+.win-hero {
+  flex-direction: row;
+  justify-content: center;
+  gap: 16px;
+  margin: 0;
+}
+
+.orb-hero {
+  --orb: 76px;
+}
+
+.win-kicker {
+  margin: 0;
+}
+
+.win-target {
+  font-size: 30px;
+  text-align: left;
+}
+
+.win-title {
+  margin: 10px auto 0;
+  padding: 7px 14px;
+}
+
+.win-title-emoji {
+  font-size: 28px;
+}
+
+.win .stat-row {
+  margin: 10px 0 0;
+}
+
+.win .stat {
+  padding: 5px 4px;
+}
+
+.share-box {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 14px;
+  margin-top: 10px;
+}
+
+.share-grid-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.share-grid {
+  padding: 5px 10px;
+  font-size: 17px;
+  line-height: 1.25;
+  letter-spacing: 1px;
+}
+
+.share-resets {
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(122, 78, 23, 0.12);
+  font-weight: 700;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.share-legend {
+  margin: 4px 0 0;
+  text-align: center;
+  font-size: 12.5px;
+}
+
+.win .panel-sub {
+  margin: 10px 0 6px;
+}
+
+.path-list {
+  gap: 5px;
+}
+
+.path-list li {
+  padding: 4px 8px;
+}
+
+.path-note {
+  margin: 5px 0 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.win-foot {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 16px;
+}
+
+.win-foot .panel-actions {
+  margin-top: 0;
+}
+
+@media (max-width: 640px) {
+  .modal:has(.win) {
+    padding: 16px 12px 14px;
+  }
+  .orb-hero {
+    --orb: 58px;
+  }
+  .win-target {
+    font-size: 24px;
+  }
+  .win-title-name {
+    font-size: 17px;
+  }
+  .win-title-blurb {
+    font-size: 14px;
+  }
+  .share-grid {
+    font-size: 15px;
+  }
+  .chip {
+    font-size: 13.5px;
+    padding: 1px 7px 1px 2px;
+  }
+  .chip .el-icon {
+    width: 18px;
+    height: 18px;
+  }
+  .path-list li {
+    padding: 3px 6px;
+    gap: 3px 4px;
+  }
 }

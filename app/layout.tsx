@@ -7,7 +7,7 @@ const display = Cinzel_Decorative({ subsets: ["latin"], weight: ["700", "900"], 
 const caps = Cinzel({ subsets: ["latin"], weight: ["500", "700"], variable: "--font-caps" });
 const body = EB_Garamond({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
   variable: "--font-body",
 });

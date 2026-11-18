@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { BASE } from "@/lib/config";
 import { pairKey, shareGrid } from "@/lib/game";
 import { alchemyTitle } from "@/lib/titles";
@@ -20,16 +19,21 @@ interface Props {
 }
 
 export default function WinPanel({ puzzle, run, practice, name, icon, onPlayAgain, onArchive, onToast }: Props) {
-  const [revealed, setRevealed] = useState(run.merges === puzzle.par);
   const title = alchemyTitle(run.merges, puzzle.par, puzzle.complexity);
   const over = run.merges - puzzle.par;
-  const grid = shareGrid(run);
+  const { rows, resets } = shareGrid(run);
   const found = new Set(run.discovered);
+  const target = name(puzzle.target);
 
   async function share() {
-    const head = `Alchemdle #${puzzle.n}${practice ? " (practice)" : ""} ⚗️ ${run.merges}/${puzzle.par}`;
-    const url = `${window.location.origin}${BASE}/`;
-    const text = [head, `${title.emoji} ${title.name}`, ...grid, url].join("\n");
+    const stats = [`${run.merges} merge${run.merges === 1 ? "" : "s"}`, `Goal: ${puzzle.par}`];
+    if (resets) stats.push(`🔄 ${resets}`);
+    const text = [
+      `🧪 Alchemdle #${puzzle.n}${practice ? " (practice)" : ""} — ${target.toUpperCase()}`,
+      `${title.emoji} ${title.name} (${stats.join(" • ")})`,
+      ...rows,
+      `${window.location.origin}${BASE}/`,
+    ].join("\n");
     try {
       if (navigator.share && window.matchMedia("(pointer: coarse)").matches) {
         await navigator.share({ text });
@@ -38,7 +42,7 @@ export default function WinPanel({ puzzle, run, practice, name, icon, onPlayAgai
       await navigator.clipboard.writeText(text);
       onToast("Result copied to your clipboard.");
     } catch (e) {
-      if ((e as Error)?.name !== "AbortError") onToast("Couldn’t copy. Select the grid above instead.");
+      if ((e as Error)?.name !== "AbortError") onToast("Couldn’t copy. Select the grid instead.");
     }
   }
 
@@ -48,8 +52,10 @@ export default function WinPanel({ puzzle, run, practice, name, icon, onPlayAgai
         <div className="orb orb-hero brewed">
           <ElementIcon icon={icon(puzzle.target)} />
         </div>
-        <p className="win-kicker">You brewed</p>
-        <h2 className="win-target">{name(puzzle.target)}</h2>
+        <div>
+          <p className="win-kicker">You brewed</p>
+          <h2 className="win-target">{target}</h2>
+        </div>
       </div>
 
       <div className="win-title">
@@ -85,51 +91,47 @@ export default function WinPanel({ puzzle, run, practice, name, icon, onPlayAgai
       </div>
 
       <div className="share-box">
-        <pre className="share-grid" aria-label="Share grid">
-          {grid.join("\n")}
-        </pre>
-        <p className="share-legend">🟨 fed the brew · 🟪 detour · 🔄 reset</p>
+        <div className="share-grid-wrap">
+          <pre className="share-grid" aria-label="Share grid">
+            {rows.join("\n")}
+          </pre>
+          {resets > 0 && <span className="share-resets">🔄 ×{resets}</span>}
+        </div>
         <button className="btn btn-primary" onClick={share}>
           Share result
         </button>
       </div>
+      <p className="share-legend">
+        🟨 fed the brew · 🟪 detour{resets > 0 ? " · 🔄 resets" : ""}
+        {run.merges > 10 ? " · detours condensed" : ""}
+      </p>
 
       <div className="path">
         <h3 className="panel-sub">The Master’s Recipe</h3>
-        {revealed ? (
-          <>
-            <ol className="path-list">
-              {puzzle.optimalPath.map(([a, b, r], i) => (
-                <li key={i} className={found.has(pairKey(a, b)) ? "made" : ""}>
-                  <span className="chip">
-                    <ElementIcon icon={icon(a)} />
-                    {name(a)}
-                  </span>
-                  <span className="op">+</span>
-                  <span className="chip">
-                    <ElementIcon icon={icon(b)} />
-                    {name(b)}
-                  </span>
-                  <span className="op">→</span>
-                  <span className="chip chip-result">
-                    <ElementIcon icon={icon(r)} />
-                    {name(r)}
-                  </span>
-                </li>
-              ))}
-            </ol>
-            <p className="muted small center">
-              {puzzle.optimalRoutes === 1
-                ? "This is the only fastest route."
-                : `One of ${puzzle.optimalRoutes} fastest routes.`}{" "}
-              Steps you also made are marked ✓.
-            </p>
-          </>
-        ) : (
-          <button className="btn" onClick={() => setRevealed(true)}>
-            Reveal the fastest route
-          </button>
-        )}
+        <ol className="path-list">
+          {puzzle.optimalPath.map(([a, b, r], i) => (
+            <li key={i} className={found.has(pairKey(a, b)) ? "made" : ""}>
+              <span className="chip">
+                <ElementIcon icon={icon(a)} />
+                {name(a)}
+              </span>
+              <span className="op">+</span>
+              <span className="chip">
+                <ElementIcon icon={icon(b)} />
+                {name(b)}
+              </span>
+              <span className="op">→</span>
+              <span className="chip chip-result">
+                <ElementIcon icon={icon(r)} />
+                {name(r)}
+              </span>
+            </li>
+          ))}
+        </ol>
+        <p className="path-note">
+          {puzzle.optimalRoutes === 1 ? "The only fastest route." : `One of ${puzzle.optimalRoutes} fastest routes.`} ✓ =
+          you made it too.
+        </p>
       </div>
 
       <div className="win-foot">
@@ -140,7 +142,7 @@ export default function WinPanel({ puzzle, run, practice, name, icon, onPlayAgai
         )}
         <div className="panel-actions">
           <button className="btn" onClick={onPlayAgain}>
-            {practice ? "↺ Brew again" : "↺ Practice this brew"}
+            {practice ? "↺ Brew again" : "↺ Practice"}
           </button>
           <button className="btn" onClick={onArchive}>
             📜 Archive
