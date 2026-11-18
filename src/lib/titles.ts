@@ -11,8 +11,8 @@ export function alchemyTitle(merges: number, par: number, complexity: number): A
     if (complexity >= 0.8)
       return { name: "Philosopher's Stone", emoji: "💎", blurb: "A flawless brew on a fiendish board. Bards will sing of this." };
     if (complexity >= 0.5)
-      return { name: "Grand Alchemist", emoji: "👑", blurb: "Par on a tricky board. Not one reagent wasted." };
-    return { name: "Master Alchemist", emoji: "🏆", blurb: "Straight to gold. Par, exactly." };
+      return { name: "Grand Alchemist", emoji: "👑", blurb: "Matched the best on a tricky board. Nothing wasted." };
+    return { name: "Master Alchemist", emoji: "🏆", blurb: "Straight to gold. Matched the best." };
   }
   const eff = over / (1 + 1.5 * complexity);
   if (eff <= 1) return { name: "Adept Alchemist", emoji: "⚗️", blurb: "Barely a drop spilled." };

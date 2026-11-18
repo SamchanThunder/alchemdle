@@ -1,6 +1,6 @@
 # Alchemdle
 
-A daily alchemy merge puzzle. Players combine starting ingredients to make a target element in as few merges as possible. Each puzzle has a par, the proven minimum number of merges.
+A daily alchemy merge puzzle. Players combine starting ingredients to make a target element in as few merges as possible. Each puzzle has a par (shown in-game as "Best"), the proven minimum number of merges.
 
 Built as a static Next.js site. Puzzle generation and solving happen ahead of time in a Python pipeline, so the client only fetches a small JSON file per day.
 
@@ -18,12 +18,12 @@ Built as a static Next.js site. Puzzle generation and solving happen ahead of ti
 **Data pipeline** (`scripts/build_data.py`)
 - Prunes a community Infinite Craft dataset (~206k recipes, 31.6k elements) down to 2,551 elements and 40,814 recipes reachable from the four base elements.
 - Matches each element to an OpenMoji or game-icons.net icon.
-- Generates 366 seeded daily puzzles with par 4–7.
+- Generates 366 seeded daily puzzles: 4–5 starting elements, par 3–4, and at least 2 distinct winning recipe trees each.
 
 **Solver**
 - Tokens are single-use, so a solution is a binary tree over a subset of tokens, and par = min |S| − 1.
-- BFS over the token-subset lattice: `crafted[S]` = results of `x ∈ crafted[A]`, `y ∈ crafted[B]` for each split S = A ∪ B. That is ~3ⁿ/2 splits for n ≤ 10 tokens.
-- Each puzzle is verified by replaying the optimal path and by a second BFS over multiset board states.
+- BFS over the token-subset lattice: `crafted[S]` = results of `x ∈ crafted[A]`, `y ∈ crafted[B]` for each split S = A ∪ B. That is ~3ⁿ/2 splits for n tokens.
+- Each puzzle is verified by replaying the optimal path, by a second BFS over multiset board states, and by a brute-force count of distinct recipe trees.
 
 **Per-day bundles** (`scripts/build_web_data.mjs`)
 - Precomputes only the reactions reachable on each board, so each file is ~10 KB on average instead of shipping the 520 KB recipe table.

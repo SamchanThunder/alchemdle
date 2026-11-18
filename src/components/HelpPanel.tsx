@@ -15,8 +15,8 @@ export default function HelpPanel({ onClose }: { onClose: () => void }) {
           red herrings you won’t need.
         </li>
         <li>
-          <b>Par</b> is the fewest merges the brew can possibly be made in, like par in golf. Match it for the best
-          title. Every extra merge counts against you.
+          <b>Best</b> is the fewest merges the brew can possibly be made in. Match it for the top title. Every
+          extra merge counts against you.
         </li>
         <li>
           Pairs that <b>fizzle</b> (don’t react) cost nothing, so experiment freely.

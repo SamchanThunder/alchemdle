@@ -440,8 +440,8 @@ export default function Game() {
                 {run?.merges ?? "–"}
               </span>
             </div>
-            <div className="plaque" title="Par: the fewest merges this brew can be made in">
-              <span className="plaque-label">Par</span>
+            <div className="plaque" title="Best: the fewest merges this brew can be made in">
+              <span className="plaque-label">Best</span>
               <span className="plaque-value">{puzzle?.par ?? "–"}</span>
             </div>
           </div>

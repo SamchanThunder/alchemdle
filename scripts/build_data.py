@@ -16,6 +16,7 @@ from __future__ import annotations
 import argparse
 import collections
 import datetime as dt
+import functools
 import hashlib
 import json
 import math
@@ -170,11 +171,11 @@ OM_SKIP_SUBGROUPS = {"brand", "ui-element", "flags", "interaction", "keycap", "a
                      "hand-fingers-partial", "hand-single-finger", "hand-fingers-closed", "hands"}
 
 # --- puzzle knobs --------------------------------------------------------------
-PAR_MIN, PAR_MAX = 4, 7
-MAX_TOKENS = 10
-# weekday (Mon=0) -> par
-WEEKDAY_PAR = {0: 4, 1: 4, 2: 5, 3: 5, 4: 6, 5: 7, 6: 6}
-WEEKDAY_DISTRACTORS = {0: 1, 1: 2, 2: 2, 3: 2, 4: 2, 5: 2, 6: 3}
+PAR_MIN, PAR_MAX = 3, 4
+MIN_TOKENS, MAX_TOKENS = 4, 5   # par can't exceed tokens - 1
+MIN_PATHS = 2                   # distinct recipe trees that make the target
+# weekday (Mon=0) -> (par, token count); spare tokens are red herrings
+WEEKDAY_PLAN = {0: (3, 4), 1: (3, 5), 2: (3, 5), 3: (4, 5), 4: (4, 5), 5: (4, 5), 6: (3, 5)}
 TARGET_COOLDOWN_DAYS = 180   # a target may return after this many days, always on a new board
 
 
@@ -643,6 +644,34 @@ class Solver:
             "craftable": set().union(*(set(c) for c in crafted if c)),
         }
 
+    def distinct_trees(self, tokens, target):
+        """Brute force: every distinct recipe tree that makes target (small boards only)."""
+        n = len(tokens)
+
+        @functools.lru_cache(maxsize=None)
+        def build(mask):
+            if mask & (mask - 1) == 0:
+                t = tokens[mask.bit_length() - 1]
+                return frozenset({(t, t)})
+            out = set()
+            low = mask & -mask
+            sub = (mask - 1) & mask
+            while sub:
+                if sub & low:
+                    for x, tx in build(sub):
+                        for y, ty in build(mask ^ sub):
+                            c = self.react(x, y)
+                            if c is not None:
+                                out.add((c, tuple(sorted((tx, ty), key=repr))))
+                sub = (sub - 1) & mask
+            return frozenset(out)
+
+        trees = set()
+        for mask in range(1, 1 << n):
+            if mask & (mask - 1):
+                trees |= {t for e, t in build(mask) if e == target}
+        return trees
+
     # ---- double checks
     def replay(self, tokens, path, target) -> int:
         """Replays the path. Returns the merge count."""
@@ -752,8 +781,11 @@ class Generator:
             interior.add(x)
         return leaves
 
-    def make(self, par, n_distractors, used_targets, used_boards, day, cooldown, tries=4000):
+    def make(self, par, n_tokens, used_targets, used_boards, day, cooldown, tries=4000):
         rng = self.rng
+        n_distractors = n_tokens - par - 1
+        if n_distractors < 0:
+            return None
         for _ in range(tries):
             target = rng.choice(self.targets)
             if target in used_targets and day - used_targets[target] < cooldown:
@@ -771,7 +803,7 @@ class Generator:
                 continue
             distractors = rng.sample(pool, n_distractors)
             tokens = leaves + distractors
-            if len(tokens) > MAX_TOKENS:
+            if not MIN_TOKENS <= len(tokens) <= MAX_TOKENS:
                 continue
             key = tuple(sorted(tokens)) + (target,)
             if key in used_boards:
@@ -779,9 +811,10 @@ class Generator:
             sol = self.solver.solve(tokens, target)
             if not sol or not (PAR_MIN <= sol["par"] <= PAR_MAX) or sol["par"] != par:
                 continue
-            total_trees = sum(sol["ways_by_merges"].values())
-            if total_trees < 2:                               # demand more than one route
+            paths = len(self.solver.distinct_trees(tokens, target))
+            if paths < MIN_PATHS:                             # need more than one way to win
                 continue
+            sol["distinct_paths"] = paths
             n_react = len(sol["reactions"])
             if n_react < len(tokens) + par:                   # board must be playful, not a corridor
                 continue
@@ -797,7 +830,7 @@ def complexity_raw(par, n_tokens, sol):
     return par + 0.35 * extra + 0.15 * math.log2(1 + len(sol["reactions"])) - 0.4 * math.log2(opt_ways)
 
 
-PAR_STAR_BASE = {4: 1.5, 5: 2.5, 6: 3.5, 7: 4.5}
+PAR_STAR_BASE = {3: 2.0, 4: 3.5}
 
 
 def assign_difficulty(puzzles):
@@ -873,14 +906,16 @@ def main():
     used_targets, used_boards, puzzles = {}, set(), []
     for day in range(args.days):
         date = start + dt.timedelta(days=day)
-        par = WEEKDAY_PAR[date.weekday()]
+        par, n_tok = WEEKDAY_PLAN[date.weekday()]
+        other = PAR_MAX if par == PAR_MIN else PAR_MIN
         made = None
-        attempts = [(par, TARGET_COOLDOWN_DAYS), (par - 1 if par > PAR_MIN else par + 1, TARGET_COOLDOWN_DAYS),
-                    (par, 30), (par, 0)]                               # graceful fallbacks: never skip a day
-        for p, cd in attempts:
-            made = gen.make(p, WEEKDAY_DISTRACTORS[date.weekday()], used_targets, used_boards, day, cd)
+        # fallbacks so no day is skipped
+        attempts = [(par, n_tok, TARGET_COOLDOWN_DAYS), (par, MIN_TOKENS + MAX_TOKENS - n_tok, TARGET_COOLDOWN_DAYS),
+                    (other, MAX_TOKENS, TARGET_COOLDOWN_DAYS), (par, n_tok, 30), (par, MAX_TOKENS, 0),
+                    (other, MAX_TOKENS, 0)]
+        for p, nt, cd in attempts:
+            made = gen.make(p, nt, used_targets, used_boards, day, cd)
             if made:
-                par = p
                 break
         if not made:
             log(f"!! could not generate puzzle for {date}")
@@ -904,6 +939,7 @@ def main():
             "optimal_routes": sol["ways_by_merges"].get(sol["par"], 0),
             "routes_by_merges": sol["ways_by_merges"],
             "distractors": sorted(distractors),
+            "distinct_paths": sol["distinct_paths"],
             "possible_reactions": len(sol["reactions"]),
             "_complexity_raw": complexity_raw(sol["par"], len(tokens), sol),
         })
@@ -915,7 +951,9 @@ def main():
     bfs_confirmed = bfs_skipped = 0
     for pz in puzzles:
         assert PAR_MIN <= pz["par"] <= PAR_MAX
+        assert MIN_TOKENS <= len(pz["tokens"]) <= MAX_TOKENS
         assert pz["target"] not in pz["tokens"]
+        assert len(solver.distinct_trees(pz["tokens"], pz["target"])) >= MIN_PATHS, pz["number"]
         assert solver.replay(pz["tokens"], pz["optimal_path"], pz["target"]) == pz["par"]
         r = solver.bfs_min_merges(pz["tokens"], pz["target"], pz["par"])
         if r == -1:

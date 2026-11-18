@@ -69,11 +69,11 @@ export default function WinPanel({ puzzle, run, practice, name, icon, onPlayAgai
         </div>
         <div className="stat">
           <b>{puzzle.par}</b>
-          <span>Par</span>
+          <span>Best</span>
         </div>
         <div className="stat">
           <b>{over === 0 ? "±0" : `+${over}`}</b>
-          <span>Over par</span>
+          <span>Over best</span>
         </div>
         <div className="stat">
           <b>
@@ -120,14 +120,14 @@ export default function WinPanel({ puzzle, run, practice, name, icon, onPlayAgai
             </ol>
             <p className="muted small center">
               {puzzle.optimalRoutes === 1
-                ? "This is the only route at par."
-                : `One of ${puzzle.optimalRoutes} routes at par.`}{" "}
+                ? "This is the only fastest route."
+                : `One of ${puzzle.optimalRoutes} fastest routes.`}{" "}
               Steps you also made are marked ✓.
             </p>
           </>
         ) : (
           <button className="btn" onClick={() => setRevealed(true)}>
-            Reveal the par route
+            Reveal the fastest route
           </button>
         )}
       </div>
