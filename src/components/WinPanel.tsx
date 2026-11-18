@@ -2,6 +2,7 @@
 
 import { BASE } from "@/lib/config";
 import { pairKey, shareGrid } from "@/lib/game";
+import { MODES, type Mode, type ModeCopy } from "@/lib/mode";
 import { rating, starText } from "@/lib/titles";
 import type { PuzzleBundle, Run } from "@/lib/types";
 import Countdown from "./Countdown";
@@ -11,6 +12,11 @@ interface Props {
   puzzle: PuzzleBundle;
   run: Run;
   practice: boolean;
+  copy: ModeCopy;
+  other: Mode;
+  /** today's puzzle in the other mode is already solved */
+  otherDone: boolean;
+  onSwitch: () => void;
   name: (id: number) => string;
   icon: (id: number) => string;
   onPlayAgain: () => void;
@@ -18,8 +24,11 @@ interface Props {
   onToast: (text: string) => void;
 }
 
-export default function WinPanel({ puzzle, run, practice, name, icon, onPlayAgain, onArchive, onToast }: Props) {
+export default function WinPanel(props: Props) {
+  const { puzzle, run, practice, copy, other, otherDone, onSwitch, name, icon, onPlayAgain, onArchive, onToast } = props;
   const rate = rating(run.merges, puzzle.par);
+  const verdict = copy.verdicts[rate.stars];
+  const alt = MODES[other];
   const over = run.merges - puzzle.par;
   const { rows, resets } = shareGrid(run);
   const found = new Set(run.discovered);
@@ -29,7 +38,7 @@ export default function WinPanel({ puzzle, run, practice, name, icon, onPlayAgai
     const line = [`${starText(rate.stars)} ${run.merges}/${puzzle.par} merges`];
     if (resets) line.push(`🔄 ${resets}`);
     const text = [
-      `🧪 Alchemdle #${puzzle.n}${practice ? " (practice)" : ""} — ${target.toUpperCase()}`,
+      `${copy.shareTag} #${puzzle.n}${practice ? " (practice)" : ""} — ${target.toUpperCase()}`,
       line.join(" • "),
       ...rows,
       `${window.location.origin}${BASE}/`,
@@ -52,7 +61,7 @@ export default function WinPanel({ puzzle, run, practice, name, icon, onPlayAgai
         <span className="win-brewed-icon">
           <ElementIcon icon={icon(puzzle.target)} />
         </span>
-        <span className="win-brewed-label">You brewed</span>
+        <span className="win-brewed-label">{copy.brewed}</span>
         <span className="win-brewed-name">{target}</span>
       </div>
 
@@ -77,7 +86,7 @@ export default function WinPanel({ puzzle, run, practice, name, icon, onPlayAgai
             </>
           )}
         </div>
-        <div className={`win-verdict${rate.good ? " good" : ""}`}>{rate.verdict}</div>
+        <div className={`win-verdict${rate.good ? " good" : ""}`}>{verdict}</div>
       </div>
 
       <div className="win-stats">
@@ -111,7 +120,7 @@ export default function WinPanel({ puzzle, run, practice, name, icon, onPlayAgai
       </div>
 
       <div className="win-recipe">
-        <h3>The Master’s Recipe</h3>
+        <h3>{copy.recipe}</h3>
         {puzzle.optimalPath.map(([a, b, r], i) => {
           const made = found.has(pairKey(a, b));
           return (
@@ -141,7 +150,7 @@ export default function WinPanel({ puzzle, run, practice, name, icon, onPlayAgai
       <div className={`win-foot${practice ? " practice" : ""}`}>
         {!practice && (
           <div className="win-next">
-            <small>Next brew in</small>
+            <small>{copy.next}</small>
             <Countdown />
           </div>
         )}
@@ -154,6 +163,19 @@ export default function WinPanel({ puzzle, run, practice, name, icon, onPlayAgai
           </button>
         </div>
       </div>
+
+      <button className={`btn btn-mode btn-mode-${other}`} onClick={onSwitch}>
+        <span className="btn-mode-icon" aria-hidden>
+          {alt.icon}
+        </span>
+        <span className="btn-mode-text">
+          <b>{otherDone ? `See your ${alt.label} result` : `Play today’s ${alt.label}`}</b>
+          <small>{other === "brainrot" ? "same game, unhinged edition" : "back to the cozy original"}</small>
+        </span>
+        <span className="btn-mode-arrow" aria-hidden>
+          →
+        </span>
+      </button>
     </div>
   );
 }

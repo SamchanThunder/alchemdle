@@ -4,9 +4,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties, PointerEvent as RPointerEvent } from "react";
 import { indexUrl, puzzleUrl } from "@/lib/config";
 import { formatDate, todayPuzzleNumber } from "@/lib/date";
-import { freshBoard, hasMoves, newRun, pairKey, reactionTable, stars } from "@/lib/game";
+import { freshBoard, hasMoves, newRun, pairKey, reactionTable } from "@/lib/game";
+import { MODES, otherMode, type Mode } from "@/lib/mode";
 import { load, save } from "@/lib/storage";
-import { rating, starText } from "@/lib/titles";
+import { rating } from "@/lib/titles";
 import type { PuzzleBundle, PuzzleIndex, Run, Stats } from "@/lib/types";
 import ElementIcon from "./ElementIcon";
 import Modal from "./Modal";
@@ -15,9 +16,10 @@ import StatsPanel from "./StatsPanel";
 import ArchivePanel from "./ArchivePanel";
 import HelpPanel from "./HelpPanel";
 import TransmutationCircle from "./TransmutationCircle";
+import BrainrotSky from "./BrainrotSky";
 
 type Panel = null | "win" | "stats" | "archive" | "help";
-interface Selection { n: number; practice: boolean }
+interface Selection { mode: Mode; n: number; practice: boolean }
 interface Burst { id: number; x: number; y: number; big: boolean }
 interface Toast { id: number; text: string; kind: "ok" | "new" | "fizzle" | "info" | "win" }
 interface SavedRun { v: 2; sig: string; run: Run }
@@ -25,18 +27,13 @@ interface Drag { uid: number; x0: number; y0: number; moved: boolean; el: HTMLEl
 
 const EMPTY_STATS: Stats = { wins: 0, streak: 0, maxStreak: 0, lastWon: null, dist: {}, results: {} };
 
-const FIZZLES = [
-  (a: string, b: string) => `${a} and ${b} refuse to mingle.`,
-  (a: string, b: string) => `${a} + ${b}… a sad little puff of smoke.`,
-  (a: string, b: string) => `Nothing stirs between ${a} and ${b}.`,
-  (a: string, b: string) => `${a} gives ${b} the cold shoulder.`,
-  (a: string, b: string) => `The cauldron shrugs at ${a} and ${b}.`,
-];
-
-const runKey = (s: Selection) => (s.practice ? `practice:${s.n}` : `run:${s.n}`);
+const runKey = (s: Selection) => MODES[s.mode].store + (s.practice ? `practice:${s.n}` : `run:${s.n}`);
 const clamp01 = (v: number) => Math.min(0.98, Math.max(0.02, v));
 
 export default function Game() {
+  const [mode, setMode] = useState<Mode | null>(null);
+  const [dir, setDir] = useState("puzzles");
+  const [loadedFor, setLoadedFor] = useState<Selection | null>(null);
   const [index, setIndex] = useState<PuzzleIndex | null>(null);
   const [loadError, setLoadError] = useState(false);
   const [todayN, setTodayN] = useState(0);
@@ -59,35 +56,60 @@ export default function Game() {
   const drag = useRef<Drag | null>(null);
   const seq = useRef(0);
   const winTimer = useRef<number | undefined>(undefined);
+  const urlUsed = useRef(false);
+  const m: Mode = mode ?? "classic";
+  const copy = MODES[m];
 
   const boardSize = () => {
     const r = boardRef.current?.getBoundingClientRect();
     return r && r.width > 80 && r.height > 80 ? ([r.width, r.height] as const) : ([800, 520] as const);
   };
 
-  // ---- boot: index, today's number, URL selection, stats -------------------
+  // ---- boot: mode from the URL (classic by default) ----
   useEffect(() => {
-    setStats(load("stats", EMPTY_STATS));
-    fetch(indexUrl())
-      .then((r) => {
+    setMode(new URLSearchParams(window.location.search).get("mode") === "brainrot" ? "brainrot" : "classic");
+  }, []);
+
+  // ---- per mode: index, today's number, stats ----
+  useEffect(() => {
+    if (!mode) return;
+    let cancelled = false;
+    const c = MODES[mode];
+    document.documentElement.dataset.mode = mode;
+    setStats(load(c.store + "stats", EMPTY_STATS));
+    setLoadError(false);
+    const get = (d: string) =>
+      fetch(indexUrl(d)).then((r) => {
         if (!r.ok) throw new Error(String(r.status));
-        return r.json();
-      })
-      .then((idx: PuzzleIndex) => {
+        return r.json() as Promise<PuzzleIndex>;
+      });
+    // no brainrot puzzles yet: show the classic ones in the brainrot look
+    get(c.dir)
+      .then((idx) => [idx, c.dir] as const)
+      .catch(() => (c.dir !== "puzzles" ? get("puzzles").then((idx) => [idx, "puzzles"] as const) : Promise.reject()))
+      .then(([idx, d]) => {
+        if (cancelled) return;
         const params = new URLSearchParams(window.location.search);
         let now = new Date();
         // dev only: ?date=2027-01-05 fakes today
         const fake = process.env.NODE_ENV !== "production" && params.get("date");
         if (fake) now = new Date(`${fake}T12:00:00`);
         const t = todayPuzzleNumber(idx.startDate, idx.count, now);
-        const q = Number(params.get("n"));
+        const q = urlUsed.current ? 0 : Number(params.get("n"));
         const n = q >= 1 && q <= t ? q : t;
+        const practice = n !== t || (!urlUsed.current && params.has("practice"));
+        urlUsed.current = true;
         setIndex(idx);
+        setDir(d);
+        if (d !== c.dir) showToast("brainrot puzzles still cooking 🍳 classic ones for now", "info", 3200);
         setTodayN(t);
-        setSel({ n, practice: n !== t || params.has("practice") });
+        setSel({ mode, n, practice });
       })
-      .catch(() => setLoadError(true));
-  }, []);
+      .catch(() => !cancelled && setLoadError(true));
+    return () => {
+      cancelled = true;
+    };
+  }, [mode]);
 
   // ---- load the selected puzzle + any saved run ------------------------------
   useEffect(() => {
@@ -97,7 +119,7 @@ export default function Game() {
     setHover(null);
     setBursts([]);
     window.clearTimeout(winTimer.current);
-    fetch(puzzleUrl(sel.n))
+    fetch(puzzleUrl(dir, sel.n))
       .then((r) => {
         if (!r.ok) throw new Error(String(r.status));
         return r.json();
@@ -109,19 +131,20 @@ export default function Game() {
         const r = ok ? saved.run : newRun(p, ...boardSize());
         setPuzzle(p);
         setRun(r);
+        setLoadedFor(sel);
         setPanel((cur) => (r.won && cur !== "help" ? "win" : cur === "win" ? null : cur));
       })
       .catch(() => !cancelled && setLoadError(true));
     return () => {
       cancelled = true;
     };
-  }, [sel]);
+  }, [sel, dir]);
 
   // ---- persist the run --------------------------------------------------------
   useEffect(() => {
-    if (sel && puzzle && run && puzzle.n === sel.n)
+    if (sel && puzzle && run && loadedFor === sel)
       save(runKey(sel), { v: 2, sig: puzzle.tokens.join(","), run } satisfies SavedRun);
-  }, [sel, puzzle, run]);
+  }, [sel, puzzle, run, loadedFor]);
 
   // ---- keep the URL in sync ----
   useEffect(() => {
@@ -129,6 +152,8 @@ export default function Game() {
     const url = new URL(window.location.href);
     url.searchParams.delete("n");
     url.searchParams.delete("practice");
+    url.searchParams.delete("mode");
+    if (sel.mode !== "classic") url.searchParams.set("mode", sel.mode);
     if (sel.n !== todayN) url.searchParams.set("n", String(sel.n));
     else if (sel.practice) url.searchParams.set("practice", "1");
     window.history.replaceState(null, "", url);
@@ -189,12 +214,12 @@ export default function Game() {
       s.dist[bucket] = (s.dist[bucket] ?? 0) + 1;
     }
     if (!prev || r.merges < prev.merges) {
-      s.results[key] = { merges: r.merges, par: p.par, title: `${starText(rate.stars)} ${rate.verdict}`, daily: isDaily || !!prev?.daily };
+      s.results[key] = { merges: r.merges, par: p.par, title: `${"⭐".repeat(rate.stars)} ${copy.verdicts[rate.stars]}`, daily: isDaily || !!prev?.daily };
     } else if (isDaily && !prev.daily) {
       s.results[key] = { ...prev, daily: true };
     }
     setStats(s);
-    save("stats", s);
+    save(copy.store + "stats", s);
   }
 
   /** Returns true if the pair reacted. */
@@ -208,7 +233,7 @@ export default function Game() {
     if (r === undefined) {
       setRun({ ...run, fizzles: run.fizzles + 1 });
       shake([u1, u2]);
-      const line = FIZZLES[(t1.id * 7 + t2.id * 13 + run.fizzles) % FIZZLES.length];
+      const line = copy.fizzles[(t1.id * 7 + t2.id * 13 + run.fizzles) % copy.fizzles.length];
       showToast(line(name(t1.id), name(t2.id)), "fizzle");
       return false;
     }
@@ -230,11 +255,11 @@ export default function Game() {
     setFlash((f) => f + 1);
     setRun(next);
     if (won) {
-      showToast(`✨ You brewed ${name(r)}!`, "win", 2600);
+      showToast(copy.winToast(name(r)), "win", 2600);
       recordWin(puzzle, next);
       winTimer.current = window.setTimeout(() => setPanel("win"), 1300);
     } else {
-      showToast(`${name(t1.id)} + ${name(t2.id)} = ${name(r)}${isNew ? "  ✦ new!" : ""}`, isNew ? "new" : "ok");
+      showToast(`${name(t1.id)} + ${name(t2.id)} = ${name(r)}${isNew ? copy.newTag : ""}`, isNew ? "new" : "ok");
     }
     return true;
   }
@@ -253,12 +278,12 @@ export default function Game() {
       log: [...run.log, { reset: true }],
     });
     setSelected(null);
-    showToast("The board is restocked. Your merge count carries on.", "info");
+    showToast(copy.restock, "info");
   }
 
   function playAgain() {
     if (!puzzle || !sel) return;
-    const s = { n: sel.n, practice: true };
+    const s = { ...sel, practice: true };
     save(runKey(s), null); // always start a clean practice run
     setPanel(null);
     if (!sel.practice) setSel(s);
@@ -268,7 +293,17 @@ export default function Game() {
   function pick(n: number) {
     setPanel(null);
     if (sel && n === sel.n && sel.practice === (n !== todayN)) return;
-    setSel({ n, practice: n !== todayN });
+    setSel({ mode: m, n, practice: n !== todayN });
+  }
+
+  function switchMode(to: Mode) {
+    setPanel(null);
+    if (to === mode) return;
+    window.clearTimeout(winTimer.current);
+    setSel(null);
+    setPuzzle(null);
+    setRun(null);
+    setMode(to);
   }
 
   function tap(uid: number) {
@@ -364,10 +399,13 @@ export default function Game() {
 
   // ---- render --------------------------------------------------------------------
   const dateLabel = puzzle ? formatDate(puzzle.date) : "";
-  const modeLabel = sel?.practice ? "PRACTICE" : "DAILY";
+  const modeLabel = sel?.practice ? "PRACTICE" : copy.daily;
+  const other = otherMode(m);
+  const otherDone = panel === "win" && !!load<SavedRun | null>(MODES[other].store + `run:${todayN}`, null)?.run?.won;
 
   return (
-    <main className="app">
+    <main className={`app mode-${m}`}>
+      {m === "brainrot" && <BrainrotSky />}
       <header className="hud">
         <div className="hud-top">
           <button className="icon-btn" onClick={() => setPanel("help")} aria-label="How to play" title="How to play">
@@ -378,6 +416,11 @@ export default function Game() {
               <span className="title-flourish" aria-hidden>✦</span>
               Alchemdle
               <span className="title-flourish" aria-hidden>✦</span>
+              {m === "brainrot" && (
+                <span className="title-sticker" aria-hidden>
+                  brainrot
+                </span>
+              )}
             </h1>
             <p className="subtitle">
               {sel && puzzle ? (
@@ -388,6 +431,19 @@ export default function Game() {
                 <>&nbsp;</>
               )}
             </p>
+            <div className="mode-switch" role="tablist" aria-label="Game mode">
+              {(["classic", "brainrot"] as const).map((k) => (
+                <button
+                  key={k}
+                  role="tab"
+                  aria-selected={m === k}
+                  className={`mode-tab mode-tab-${k}${m === k ? " active" : ""}`}
+                  onClick={() => switchMode(k)}
+                >
+                  <span aria-hidden>{MODES[k].icon}</span> {MODES[k].label}
+                </button>
+              ))}
+            </div>
           </div>
           <div className="hud-icons">
             <button className="icon-btn" onClick={() => setPanel("archive")} aria-label="Archive" title="Archive & practice">
@@ -401,7 +457,7 @@ export default function Game() {
 
         <div className="hud-row">
           <section className="brew" aria-live="polite">
-            <div className="brew-ribbon">{isDaily ? "Today’s Brew" : "Practice Brew"}</div>
+            <div className="brew-ribbon">{isDaily ? copy.ribbon : copy.ribbonPractice}</div>
             <div className="brew-card">
               {puzzle ? (
                 <>
@@ -412,7 +468,7 @@ export default function Game() {
                     <div className="brew-name">{name(puzzle.target)}</div>
                     <div className="brew-meta">
                       <span className="stars" aria-label={`Difficulty ${puzzle.difficulty} of 5`}>
-                        {stars(puzzle.difficulty)}
+                        {copy.difficulty(puzzle.difficulty)}
                       </span>
                       <span className="dot">•</span>
                       <span title="Ingredients you start with">{puzzle.tokens.length} ingredients</span>
@@ -421,7 +477,7 @@ export default function Game() {
                 </>
               ) : (
                 <div className="brew-loading">
-                  {loadError ? "The library is locked. Couldn’t load today’s brew." : "Consulting the stars…"}
+                  {loadError ? copy.loadError : copy.loading}
                 </div>
               )}
             </div>
@@ -514,9 +570,9 @@ export default function Game() {
 
           {stuck && (
             <div className="stuck" role="status">
-              <p>The cauldron has gone quiet. Nothing left on the bench will react.</p>
+              <p>{copy.stuck}</p>
               <button className="btn" onClick={resetBoard}>
-                ↺ Reset the board
+                {copy.stuckBtn}
               </button>
             </div>
           )}
@@ -533,7 +589,7 @@ export default function Game() {
             <span>
               Discoveries <b>{run?.discovered.length ?? 0}</b> / {puzzle?.possibleReactions ?? "–"}
             </span>
-            {!run?.won && <span className="hint">Drag an ingredient onto another, or tap two.</span>}
+            {!run?.won && <span className="hint">{copy.hint}</span>}
           </div>
         </div>
       </section>
@@ -561,6 +617,10 @@ export default function Game() {
             puzzle={puzzle}
             run={run}
             practice={sel.practice}
+            copy={copy}
+            other={other}
+            otherDone={otherDone}
+            onSwitch={() => switchMode(other)}
             name={name}
             icon={icon}
             onPlayAgain={playAgain}
@@ -576,7 +636,7 @@ export default function Game() {
       )}
       {panel === "archive" && index && (
         <Modal onClose={() => setPanel(null)} label="Archive">
-          <ArchivePanel index={index} todayN={todayN} current={sel} stats={stats} onPick={pick} />
+          <ArchivePanel index={index} todayN={todayN} current={sel} stats={stats} difficulty={copy.difficulty} onPick={pick} />
         </Modal>
       )}
       {panel === "help" && (

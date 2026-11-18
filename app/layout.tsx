@@ -1,16 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { Cinzel, Cinzel_Decorative, EB_Garamond } from "next/font/google";
+import { Cinzel, Cinzel_Decorative, EB_Garamond, Rubik } from "next/font/google";
 import Sparkles from "@/components/Sparkles";
 import "./globals.css";
 
 const display = Cinzel_Decorative({ subsets: ["latin"], weight: ["700", "900"], variable: "--font-display" });
-const caps = Cinzel({ subsets: ["latin"], weight: ["500", "700"], variable: "--font-caps" });
+const caps = Cinzel({ subsets: ["latin"], weight: ["500", "700"], variable: "--font-cinzel" });
 const body = EB_Garamond({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
-  variable: "--font-body",
+  variable: "--font-garamond",
 });
+
+const rot = Rubik({ subsets: ["latin"], weight: ["500", "700", "900"], variable: "--font-rot" });
 
 export const metadata: Metadata = {
   title: "Alchemdle: the daily alchemy puzzle",
@@ -27,7 +29,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${display.variable} ${caps.variable} ${body.variable}`}>
+    <html lang="en" className={`${display.variable} ${caps.variable} ${body.variable} ${rot.variable}`}>
       <body>
         <Sparkles />
         {children}

@@ -35,8 +35,8 @@
   --orb: 76px;
 
   --font-display: "Cinzel Decorative", Georgia, serif;
-  --font-caps: "Cinzel", Georgia, serif;
-  --font-body: "EB Garamond", Georgia, serif;
+  --font-caps: var(--font-cinzel), Georgia, serif;
+  --font-body: var(--font-garamond), Georgia, serif;
 }
 
 * {
@@ -2136,5 +2136,356 @@ a {
   .won-bar .btn {
     padding: 15px 34px;
     font-size: 19px;
+  }
+}
+
+/* ---------- mode switch ------------------------------------------------- */
+
+.mode-switch {
+  display: inline-flex;
+  gap: 2px;
+  margin-top: 2px;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgba(8, 6, 28, 0.55);
+  border: 1px solid rgba(251, 231, 168, 0.35);
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.mode-tab {
+  border: 0;
+  border-radius: 999px;
+  padding: 4px 12px;
+  background: transparent;
+  color: #fbe7a8;
+  font-family: var(--font-cinzel), Georgia, serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  cursor: pointer;
+  opacity: 0.75;
+  transition: opacity 0.15s ease, transform 0.15s ease, background 0.2s ease;
+}
+
+.mode-tab:hover {
+  opacity: 1;
+}
+
+.mode-tab.active {
+  opacity: 1;
+  cursor: default;
+}
+
+.mode-tab-classic {
+  font-family: var(--font-caps);
+}
+
+.mode-tab-classic.active {
+  background: linear-gradient(180deg, #fbf4e2, #e3cfa2);
+  color: #3a2716;
+  box-shadow: 0 1px 0 #7a4e17, 0 0 10px rgba(255, 213, 107, 0.35);
+}
+
+.mode-tab-brainrot {
+  font-family: var(--font-rot), system-ui, sans-serif;
+  font-weight: 900;
+  letter-spacing: 0.01em;
+}
+
+.mode-tab-brainrot:not(.active):hover {
+  transform: rotate(-3deg) scale(1.05);
+}
+
+.mode-tab-brainrot.active {
+  background: linear-gradient(95deg, #b6ff3b, #3ef0ff);
+  color: #1a0730;
+  box-shadow: 0 1px 0 #5b1a8a, 0 0 12px rgba(182, 255, 59, 0.45);
+}
+
+@media (min-width: 641px) {
+  .mode-switch {
+    margin-top: 4px;
+    padding: 4px;
+  }
+  .mode-tab {
+    font-size: 17px;
+    padding: 7px 22px;
+  }
+}
+
+/* ---------- results: jump to the other mode ------------------------------ */
+
+.btn-mode {
+  width: 100%;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 18px;
+  border-radius: 16px;
+  text-align: left;
+  letter-spacing: 0.02em;
+}
+
+.btn-mode-icon {
+  font-size: 30px;
+  line-height: 1;
+}
+
+.btn-mode-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.btn-mode-text b {
+  font-size: 18px;
+}
+
+.btn-mode-text small {
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.btn-mode-arrow {
+  font-size: 24px;
+  transition: transform 0.15s ease;
+}
+
+.btn-mode:hover .btn-mode-arrow {
+  transform: translateX(4px);
+}
+
+.btn-mode-brainrot {
+  font-family: var(--font-rot), system-ui, sans-serif;
+  background:
+    linear-gradient(100deg, #b6ff3b, #3ef0ff 55%, #ff7cc6) padding-box,
+    linear-gradient(100deg, #5b1a8a, #ff3ea5) border-box;
+  color: #1a0730;
+  box-shadow: 0 3px 0 #5b1a8a, 0 6px 16px rgba(91, 26, 138, 0.35);
+}
+
+.btn-mode-brainrot .btn-mode-text b {
+  font-weight: 900;
+}
+
+.btn-mode-brainrot .btn-mode-icon {
+  animation: wiggle 1.6s ease-in-out infinite;
+}
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(-8deg);
+  }
+  50% {
+    transform: rotate(8deg) scale(1.08);
+  }
+}
+
+.btn-mode-classic {
+  font-family: var(--font-cinzel), Georgia, serif;
+}
+
+@media (min-width: 641px) {
+  .btn-mode {
+    padding: 12px 22px;
+  }
+  .btn-mode-text b {
+    font-size: 20px;
+  }
+}
+
+/* ============================================================
+   Brainrot mode: same bench, louder room
+   ============================================================ */
+
+html[data-mode="brainrot"] {
+  --night-0: #0b0316;
+  --night-1: #1a0730;
+  --night-2: #33105a;
+  --night-3: #5b1a8a;
+  --dusk: #a855f7;
+
+  --parchment: #f2eaff;
+  --parchment-hi: #ffffff;
+  --parchment-lo: #dccbff;
+  --ink: #1f0b36;
+  --ink-soft: #6b4b93;
+
+  --brass-hi: #f4ffd9;
+  --brass: #ff3ea5;
+  --brass-mid: #ff7cc6;
+  --brass-lo: #5b1a8a;
+  --gold: #b6ff3b;
+  --gold-glow: rgba(182, 255, 59, 0.55);
+
+  --plum: #a855f7;
+  --rose: #ff3ea5;
+
+  --brass-border: linear-gradient(150deg, #b6ff3b, #3ef0ff 35%, #ff3ea5 70%, #a855f7);
+
+  --font-caps: var(--font-rot), system-ui, sans-serif;
+  --font-body: var(--font-rot), system-ui, sans-serif;
+}
+
+html[data-mode="brainrot"] body {
+  background-color: var(--night-1);
+  background-image:
+    radial-gradient(ellipse 60% 40% at 10% 0%, rgba(62, 240, 255, 0.18), transparent 70%),
+    radial-gradient(ellipse 60% 45% at 95% 10%, rgba(255, 62, 165, 0.25), transparent 70%),
+    radial-gradient(ellipse 120% 60% at 50% 115%, rgba(182, 255, 59, 0.16), transparent 60%),
+    linear-gradient(180deg, var(--night-0) 0%, var(--night-1) 40%, var(--night-2) 80%, #4a1470 100%);
+}
+
+html[data-mode="brainrot"] .moon {
+  display: none;
+}
+
+html[data-mode="brainrot"] .star {
+  background: #f4d9ff;
+  box-shadow: 0 0 6px 1px rgba(255, 124, 198, 0.7);
+}
+
+html[data-mode="brainrot"] .glint {
+  color: #b6ff3b;
+}
+
+.rot-sky {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.rot-sky span {
+  position: absolute;
+  opacity: 0.28;
+  transform: rotate(var(--spin));
+  animation: rot-float ease-in-out infinite;
+}
+
+@keyframes rot-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--spin));
+  }
+  50% {
+    transform: translateY(-22px) rotate(calc(var(--spin) * -1));
+  }
+}
+
+html[data-mode="brainrot"] .title {
+  position: relative;
+  background: linear-gradient(95deg, #d6ff8a 0%, #b6ff3b 30%, #3ef0ff 60%, #ff7cc6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 2px 0 #3a0f63) drop-shadow(0 0 18px rgba(255, 62, 165, 0.35));
+}
+
+.title-sticker {
+  position: absolute;
+  top: -12px;
+  right: -34px;
+  padding: 2px 8px 3px;
+  border-radius: 6px;
+  background: #b6ff3b;
+  color: #1a0730;
+  -webkit-text-fill-color: #1a0730;
+  font-family: var(--font-rot), system-ui, sans-serif;
+  font-weight: 900;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transform: rotate(12deg);
+  box-shadow: 2px 2px 0 #ff3ea5;
+  animation: sticker-bob 2.4s ease-in-out infinite;
+}
+
+@keyframes sticker-bob {
+  0%,
+  100% {
+    transform: rotate(12deg);
+  }
+  50% {
+    transform: rotate(6deg) scale(1.06);
+  }
+}
+
+html[data-mode="brainrot"] .subtitle {
+  color: #d6ff8a;
+  letter-spacing: 0.14em;
+}
+
+html[data-mode="brainrot"] .btn-primary {
+  background:
+    linear-gradient(180deg, #e0ff9e, #b6ff3b 60%, #8fd61f) padding-box,
+    var(--brass-border) border-box;
+  color: #1a0730;
+  box-shadow: 0 3px 0 #4d7a0a, 0 6px 14px rgba(0, 0, 0, 0.35);
+}
+
+html[data-mode="brainrot"] .btn:not(.btn-primary):not(.btn-mode) {
+  background:
+    linear-gradient(180deg, #5b2a9a, #33105a) padding-box,
+    var(--brass-border) border-box;
+}
+
+html[data-mode="brainrot"] .glyph::before {
+  background: radial-gradient(circle, rgba(214, 255, 138, 0.85) 0%, rgba(62, 240, 255, 0.4) 38%, rgba(62, 240, 255, 0) 70%);
+}
+
+html[data-mode="brainrot"] .stuck {
+  background: rgba(26, 7, 48, 0.9);
+}
+
+html[data-mode="brainrot"] .bench-foot .hint {
+  font-style: normal;
+}
+
+html[data-mode="brainrot"] .stuck p {
+  font-style: normal;
+}
+
+html[data-mode="brainrot"] .toast-win {
+  font-weight: 900;
+}
+
+html[data-mode="brainrot"] .win-brewed-label {
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .title-sticker {
+    top: -16px;
+    right: -22px;
+    font-size: 9px;
+    padding: 1px 5px 2px;
+  }
+  .btn-mode {
+    padding: 7px 14px;
+    gap: 10px;
+  }
+  .btn-mode-icon {
+    font-size: 24px;
+  }
+  .btn-mode-text b {
+    font-size: 16px;
+  }
+  .btn-mode-text small {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rot-sky span,
+  .title-sticker,
+  .btn-mode-brainrot .btn-mode-icon {
+    animation: none;
   }
 }

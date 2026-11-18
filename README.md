@@ -46,7 +46,7 @@ npm run build    # static site in out/
 Rebuild the puzzle data with:
 
 ```bash
-python scripts/build_data.py --days 366 --start 2026-11-17 --seed 1729
+python scripts/build_data.py --days 366 --start 2026-11-18 --seed 1729
 ```
 
 ## Deploy

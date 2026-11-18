@@ -1,5 +1,4 @@
 import { formatDate } from "@/lib/date";
-import { stars } from "@/lib/game";
 import type { PuzzleIndex, Stats } from "@/lib/types";
 import ElementIcon from "./ElementIcon";
 
@@ -8,10 +7,11 @@ interface Props {
   todayN: number;
   current: { n: number; practice: boolean } | null;
   stats: Stats;
+  difficulty: (n: number) => string;
   onPick: (n: number) => void;
 }
 
-export default function ArchivePanel({ index, todayN, current, stats, onPick }: Props) {
+export default function ArchivePanel({ index, todayN, current, stats, difficulty, onPick }: Props) {
   const past = index.puzzles.slice(0, todayN).reverse();
   const others = past.filter((p) => p.n !== todayN);
   const random = () => onPick(others[Math.floor(Math.random() * others.length)].n);
@@ -40,7 +40,7 @@ export default function ArchivePanel({ index, todayN, current, stats, onPick }: 
                   <span className="archive-name">{p.target}</span>
                   <span className="archive-date">
                     {p.n === todayN ? "Today" : formatDate(p.date)} · goal {p.par} ·{" "}
-                    <span className="stars">{stars(p.difficulty)}</span>
+                    <span className="stars">{difficulty(p.difficulty)}</span>
                   </span>
                 </span>
                 <span className="archive-res" title={res?.title}>

@@ -1,26 +1,19 @@
 #!/usr/bin/env node
-// Writes one small JSON file per day to public/puzzles/, plus an index.
+// Writes one small JSON file per day to public/puzzles/ (classic) and
+// public/brainrot/ (if data/brainrot_puzzles.json exists), plus an index each.
 // Each file lists every reaction that can happen on that day's board.
 // Usage: node scripts/build_web_data.mjs
 
-import { readFileSync, writeFileSync, mkdirSync, rmSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync, mkdirSync, rmSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const read = (p) => JSON.parse(readFileSync(join(root, p), "utf8"));
 
-const { elements } = read("data/elements.json");
-const { recipes } = read("data/recipes.json");
-const daily = read("data/daily_puzzles.json");
-
 const K = 1 << 13; // > element count
-if (elements.length >= K) throw new Error("element ids exceed pair key space");
-const recipe = new Map();
-for (const [a, b, r] of recipes) recipe.set(a * K + b, r);
-const lookup = (x, y) => (x <= y ? recipe.get(x * K + y) : recipe.get(y * K + x));
 
-function reachable(tokens) {
+function reachable(tokens, lookup) {
   const n = tokens.length;
   const full = (1 << n) - 1;
   const R = new Array(full + 1);
@@ -53,54 +46,68 @@ function reachable(tokens) {
   return [...reactions.values()].sort((p, q) => p[0] - q[0] || p[1] - q[1]);
 }
 
-const outDir = join(root, "public", "puzzles");
-rmSync(outDir, { recursive: true, force: true });
-mkdirSync(outDir, { recursive: true });
+function build(src, dir, elementsFile, recipesFile) {
+  const daily = read(src);
+  const { elements } = read(elementsFile);
+  const { recipes } = read(recipesFile);
+  if (elements.length >= K) throw new Error("element ids exceed pair key space");
+  const recipe = new Map();
+  for (const [a, b, r] of recipes) recipe.set(a * K + b, r);
+  const lookup = (x, y) => (x <= y ? recipe.get(x * K + y) : recipe.get(y * K + x));
+  const outDir = join(root, "public", dir);
+  rmSync(outDir, { recursive: true, force: true });
+  mkdirSync(outDir, { recursive: true });
 
-const index = [];
-let mismatches = 0;
-for (const p of daily.puzzles) {
-  const reactions = reachable(p.tokens);
-  if (reactions.length !== p.possible_reactions) {
-    mismatches++;
-    console.warn(`#${p.number}: ${reactions.length} reactions vs possible_reactions=${p.possible_reactions}`);
+  const index = [];
+  let mismatches = 0;
+  for (const p of daily.puzzles) {
+    const reactions = reachable(p.tokens, lookup);
+    if (reactions.length !== p.possible_reactions) {
+      mismatches++;
+      console.warn(`#${p.number}: ${reactions.length} reactions vs possible_reactions=${p.possible_reactions}`);
+    }
+    const ids = new Set([p.target, ...p.tokens]);
+    for (const [a, b, r] of reactions) { ids.add(a); ids.add(b); ids.add(r); }
+    for (const [a, b, r] of p.optimal_path) { ids.add(a); ids.add(b); ids.add(r); }
+    const els = {};
+    for (const id of [...ids].sort((a, b) => a - b)) els[id] = [elements[id].name, elements[id].icon];
+
+    const bundle = {
+      n: p.number,
+      date: p.date,
+      weekday: p.weekday,
+      target: p.target,
+      par: p.par,
+      difficulty: p.difficulty,
+      complexity: p.complexity,
+      tokens: p.tokens,
+      distractors: p.distractors,
+      optimalPath: p.optimal_path,
+      optimalRoutes: p.optimal_routes,
+      routesByMerges: p.routes_by_merges,
+      possibleReactions: reactions.length,
+      reactions,
+      elements: els,
+    };
+    writeFileSync(join(outDir, `${p.number}.json`), JSON.stringify(bundle));
+    index.push({
+      n: p.number,
+      date: p.date,
+      par: p.par,
+      difficulty: p.difficulty,
+      target: elements[p.target].name,
+      icon: elements[p.target].icon,
+    });
   }
-  const ids = new Set([p.target, ...p.tokens]);
-  for (const [a, b, r] of reactions) { ids.add(a); ids.add(b); ids.add(r); }
-  for (const [a, b, r] of p.optimal_path) { ids.add(a); ids.add(b); ids.add(r); }
-  const els = {};
-  for (const id of [...ids].sort((a, b) => a - b)) els[id] = [elements[id].name, elements[id].icon];
-
-  const bundle = {
-    n: p.number,
-    date: p.date,
-    weekday: p.weekday,
-    target: p.target,
-    par: p.par,
-    difficulty: p.difficulty,
-    complexity: p.complexity,
-    tokens: p.tokens,
-    distractors: p.distractors,
-    optimalPath: p.optimal_path,
-    optimalRoutes: p.optimal_routes,
-    routesByMerges: p.routes_by_merges,
-    possibleReactions: reactions.length,
-    reactions,
-    elements: els,
-  };
-  writeFileSync(join(outDir, `${p.number}.json`), JSON.stringify(bundle));
-  index.push({
-    n: p.number,
-    date: p.date,
-    par: p.par,
-    difficulty: p.difficulty,
-    target: elements[p.target].name,
-    icon: elements[p.target].icon,
-  });
+  writeFileSync(
+    join(outDir, "index.json"),
+    JSON.stringify({ startDate: daily.start_date, count: index.length, puzzles: index }),
+  );
+  console.log(`wrote ${index.length} puzzle bundles to public/${dir} (${mismatches} reaction-count mismatches)`);
+  if (mismatches) process.exitCode = 1;
 }
-writeFileSync(
-  join(outDir, "index.json"),
-  JSON.stringify({ startDate: daily.start_date, count: index.length, puzzles: index }),
-);
-console.log(`wrote ${index.length} puzzle bundles to public/puzzles (${mismatches} reaction-count mismatches)`);
-if (mismatches) process.exitCode = 1;
+
+build("data/daily_puzzles.json", "puzzles", "data/elements.json", "data/recipes.json");
+if (existsSync(join(root, "data/brainrot_puzzles.json")))
+  build("data/brainrot_puzzles.json", "brainrot", "data/brainrot_elements.json", "data/brainrot_recipes.json");
+else rmSync(join(root, "public", "brainrot"), { recursive: true, force: true });

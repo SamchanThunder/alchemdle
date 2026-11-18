@@ -1,0 +1,1937 @@
+{
+ "count": 322,
+ "elements": [
+  {
+   "id": 0,
+   "name": "Air",
+   "icon": "br/om-wind-face",
+   "emoji": "🌬️"
+  },
+  {
+   "id": 1,
+   "name": "Alien",
+   "icon": "br/om-alien",
+   "emoji": "👽"
+  },
+  {
+   "id": 2,
+   "name": "Ball",
+   "icon": "br/om-soccer-ball",
+   "emoji": "⚽"
+  },
+  {
+   "id": 3,
+   "name": "Bed",
+   "icon": "br/om-bed",
+   "emoji": "🛏️"
+  },
+  {
+   "id": 4,
+   "name": "Bird",
+   "icon": "br/om-bird",
+   "emoji": "🐦"
+  },
+  {
+   "id": 5,
+   "name": "Book",
+   "icon": "br/om-books",
+   "emoji": "📚"
+  },
+  {
+   "id": 6,
+   "name": "Brain",
+   "icon": "br/om-brain",
+   "emoji": "🧠"
+  },
+  {
+   "id": 7,
+   "name": "Bread",
+   "icon": "br/om-bread",
+   "emoji": "🍞"
+  },
+  {
+   "id": 8,
+   "name": "Burger",
+   "icon": "br/om-hamburger",
+   "emoji": "🍔"
+  },
+  {
+   "id": 9,
+   "name": "Camera",
+   "icon": "br/om-camera",
+   "emoji": "📷"
+  },
+  {
+   "id": 10,
+   "name": "Car",
+   "icon": "br/om-automobile",
+   "emoji": "🚗"
+  },
+  {
+   "id": 11,
+   "name": "Cat",
+   "icon": "br/om-cat-face",
+   "emoji": "🐱"
+  },
+  {
+   "id": 12,
+   "name": "Chair",
+   "icon": "br/om-chair",
+   "emoji": "🪑"
+  },
+  {
+   "id": 13,
+   "name": "Cheese",
+   "icon": "br/om-cheese-wedge",
+   "emoji": "🧀"
+  },
+  {
+   "id": 14,
+   "name": "Clock",
+   "icon": "br/om-alarm-clock",
+   "emoji": "⏰"
+  },
+  {
+   "id": 15,
+   "name": "Cloud",
+   "icon": "br/om-cloud",
+   "emoji": "☁️"
+  },
+  {
+   "id": 16,
+   "name": "Clown",
+   "icon": "br/om-clown-face",
+   "emoji": "🤡"
+  },
+  {
+   "id": 17,
+   "name": "Coffee",
+   "icon": "br/om-hot-beverage",
+   "emoji": "☕"
+  },
+  {
+   "id": 18,
+   "name": "Computer",
+   "icon": "br/om-laptop",
+   "emoji": "💻"
+  },
+  {
+   "id": 19,
+   "name": "Cow",
+   "icon": "br/om-cow",
+   "emoji": "🐄"
+  },
+  {
+   "id": 20,
+   "name": "Crown",
+   "icon": "br/om-crown",
+   "emoji": "👑"
+  },
+  {
+   "id": 21,
+   "name": "Dog",
+   "icon": "br/om-dog-face",
+   "emoji": "🐶"
+  },
+  {
+   "id": 22,
+   "name": "Earth",
+   "icon": "br/om-globe-showing-europe-africa",
+   "emoji": "🌍"
+  },
+  {
+   "id": 23,
+   "name": "Eye",
+   "icon": "br/om-eye",
+   "emoji": "👁️"
+  },
+  {
+   "id": 24,
+   "name": "Face",
+   "icon": "br/om-grinning-face",
+   "emoji": "😀"
+  },
+  {
+   "id": 25,
+   "name": "Fire",
+   "icon": "br/om-fire",
+   "emoji": "🔥"
+  },
+  {
+   "id": 26,
+   "name": "Fish",
+   "icon": "br/om-fish",
+   "emoji": "🐟"
+  },
+  {
+   "id": 27,
+   "name": "Food",
+   "icon": "br/om-fork-and-knife-with-plate",
+   "emoji": "🍽️"
+  },
+  {
+   "id": 28,
+   "name": "Fruit",
+   "icon": "br/om-red-apple",
+   "emoji": "🍎"
+  },
+  {
+   "id": 29,
+   "name": "Game",
+   "icon": "br/om-video-game",
+   "emoji": "🎮"
+  },
+  {
+   "id": 30,
+   "name": "Ghost",
+   "icon": "br/om-ghost",
+   "emoji": "👻"
+  },
+  {
+   "id": 31,
+   "name": "Glasses",
+   "icon": "br/om-sunglasses",
+   "emoji": "🕶️"
+  },
+  {
+   "id": 32,
+   "name": "Hand",
+   "icon": "br/om-raised-hand",
+   "emoji": "✋"
+  },
+  {
+   "id": 33,
+   "name": "Heart",
+   "icon": "br/om-red-heart",
+   "emoji": "❤️"
+  },
+  {
+   "id": 34,
+   "name": "Human",
+   "icon": "br/om-person",
+   "emoji": "🧑"
+  },
+  {
+   "id": 35,
+   "name": "Ice",
+   "icon": "br/om-ice",
+   "emoji": "🧊"
+  },
+  {
+   "id": 36,
+   "name": "Jaw",
+   "icon": "br/om-grimacing-face",
+   "emoji": "😬"
+  },
+  {
+   "id": 37,
+   "name": "Lightning",
+   "icon": "br/om-high-voltage",
+   "emoji": "⚡"
+  },
+  {
+   "id": 38,
+   "name": "Metal",
+   "icon": "br/om-gear",
+   "emoji": "⚙️"
+  },
+  {
+   "id": 39,
+   "name": "Milk",
+   "icon": "br/om-glass-of-milk",
+   "emoji": "🥛"
+  },
+  {
+   "id": 40,
+   "name": "Mirror",
+   "icon": "br/om-mirror",
+   "emoji": "🪞"
+  },
+  {
+   "id": 41,
+   "name": "Money",
+   "icon": "br/om-dollar-banknote",
+   "emoji": "💵"
+  },
+  {
+   "id": 42,
+   "name": "Monkey",
+   "icon": "br/om-monkey",
+   "emoji": "🐒"
+  },
+  {
+   "id": 43,
+   "name": "Monster",
+   "icon": "br/om-ogre",
+   "emoji": "👹"
+  },
+  {
+   "id": 44,
+   "name": "Moon",
+   "icon": "br/om-crescent-moon",
+   "emoji": "🌙"
+  },
+  {
+   "id": 45,
+   "name": "Mouth",
+   "icon": "br/om-mouth",
+   "emoji": "👄"
+  },
+  {
+   "id": 46,
+   "name": "Muscle",
+   "icon": "br/om-flexed-biceps",
+   "emoji": "💪"
+  },
+  {
+   "id": 47,
+   "name": "Music",
+   "icon": "br/om-musical-note",
+   "emoji": "🎵"
+  },
+  {
+   "id": 48,
+   "name": "Night",
+   "icon": "br/om-night-with-stars",
+   "emoji": "🌃"
+  },
+  {
+   "id": 49,
+   "name": "Ocean",
+   "icon": "br/om-water-wave",
+   "emoji": "🌊"
+  },
+  {
+   "id": 50,
+   "name": "Paper",
+   "icon": "br/om-page-facing-up",
+   "emoji": "📄"
+  },
+  {
+   "id": 51,
+   "name": "Phone",
+   "icon": "br/om-mobile-phone",
+   "emoji": "📱"
+  },
+  {
+   "id": 52,
+   "name": "Plant",
+   "icon": "br/om-seedling",
+   "emoji": "🌱"
+  },
+  {
+   "id": 53,
+   "name": "Queen",
+   "icon": "br/om-princess",
+   "emoji": "👸"
+  },
+  {
+   "id": 54,
+   "name": "Salt",
+   "icon": "br/om-salt",
+   "emoji": "🧂"
+  },
+  {
+   "id": 55,
+   "name": "Sand",
+   "icon": "br/om-desert",
+   "emoji": "🏜️"
+  },
+  {
+   "id": 56,
+   "name": "School",
+   "icon": "br/om-school",
+   "emoji": "🏫"
+  },
+  {
+   "id": 57,
+   "name": "Shoe",
+   "icon": "br/om-running-shoe",
+   "emoji": "👟"
+  },
+  {
+   "id": 58,
+   "name": "Stone",
+   "icon": "br/om-rock",
+   "emoji": "🪨"
+  },
+  {
+   "id": 59,
+   "name": "Sugar",
+   "icon": "br/om-candy",
+   "emoji": "🍬"
+  },
+  {
+   "id": 60,
+   "name": "Sun",
+   "icon": "br/om-sun",
+   "emoji": "☀️"
+  },
+  {
+   "id": 61,
+   "name": "Sword",
+   "icon": "br/om-crossed-swords",
+   "emoji": "⚔️"
+  },
+  {
+   "id": 62,
+   "name": "Toilet",
+   "icon": "br/om-toilet",
+   "emoji": "🚽"
+  },
+  {
+   "id": 63,
+   "name": "Tree",
+   "icon": "br/om-deciduous-tree",
+   "emoji": "🌳"
+  },
+  {
+   "id": 64,
+   "name": "TV",
+   "icon": "br/om-television",
+   "emoji": "📺"
+  },
+  {
+   "id": 65,
+   "name": "Water",
+   "icon": "br/om-droplet",
+   "emoji": "💧"
+  },
+  {
+   "id": 66,
+   "name": "Wood",
+   "icon": "br/om-wood",
+   "emoji": "🪵"
+  },
+  {
+   "id": 67,
+   "name": "America",
+   "icon": "br/om-statue-of-liberty",
+   "emoji": "🗽"
+  },
+  {
+   "id": 68,
+   "name": "Angry",
+   "icon": "br/om-enraged-face",
+   "emoji": "😡"
+  },
+  {
+   "id": 69,
+   "name": "Basketball",
+   "icon": "br/om-basketball",
+   "emoji": "🏀"
+  },
+  {
+   "id": 70,
+   "name": "Bathroom",
+   "icon": "br/om-shower",
+   "emoji": "🚿"
+  },
+  {
+   "id": 71,
+   "name": "Beach",
+   "icon": "br/om-beach-with-umbrella",
+   "emoji": "🏖️"
+  },
+  {
+   "id": 72,
+   "name": "Big",
+   "icon": "br/om-elephant",
+   "emoji": "🐘"
+  },
+  {
+   "id": 73,
+   "name": "Bomb",
+   "icon": "br/om-bomb",
+   "emoji": "💣"
+  },
+  {
+   "id": 74,
+   "name": "Cake",
+   "icon": "br/om-birthday-cake",
+   "emoji": "🎂"
+  },
+  {
+   "id": 75,
+   "name": "Cappuccino",
+   "icon": "br/om-bubble-tea",
+   "emoji": "🧋"
+  },
+  {
+   "id": 76,
+   "name": "Cook",
+   "icon": "br/om-man-cook",
+   "emoji": "👨‍🍳"
+  },
+  {
+   "id": 77,
+   "name": "Cool",
+   "icon": "br/om-smiling-face-with-sunglasses",
+   "emoji": "😎"
+  },
+  {
+   "id": 78,
+   "name": "Cringe",
+   "icon": "br/om-confounded-face",
+   "emoji": "😖"
+  },
+  {
+   "id": 79,
+   "name": "Day",
+   "icon": "br/om-sunrise",
+   "emoji": "🌅"
+  },
+  {
+   "id": 80,
+   "name": "Dream",
+   "icon": "br/om-thought-balloon",
+   "emoji": "💭"
+  },
+  {
+   "id": 81,
+   "name": "Energy",
+   "icon": "br/om-battery",
+   "emoji": "🔋"
+  },
+  {
+   "id": 82,
+   "name": "Farm",
+   "icon": "br/om-tractor",
+   "emoji": "🚜"
+  },
+  {
+   "id": 83,
+   "name": "Flag",
+   "icon": "br/om-chequered-flag",
+   "emoji": "🏁"
+  },
+  {
+   "id": 84,
+   "name": "Friend",
+   "icon": "br/om-handshake",
+   "emoji": "🤝"
+  },
+  {
+   "id": 85,
+   "name": "Gamer",
+   "icon": "br/om-headphone",
+   "emoji": "🎧"
+  },
+  {
+   "id": 86,
+   "name": "Gorilla",
+   "icon": "br/om-gorilla",
+   "emoji": "🦍"
+  },
+  {
+   "id": 87,
+   "name": "Gym",
+   "icon": "br/om-person-lifting-weights",
+   "emoji": "🏋️"
+  },
+  {
+   "id": 88,
+   "name": "House",
+   "icon": "br/om-house",
+   "emoji": "🏠"
+  },
+  {
+   "id": 89,
+   "name": "Internet",
+   "icon": "br/om-globe-with-meridians",
+   "emoji": "🌐"
+  },
+  {
+   "id": 90,
+   "name": "Japan",
+   "icon": "br/om-map-of-japan",
+   "emoji": "🗾"
+  },
+  {
+   "id": 91,
+   "name": "King",
+   "icon": "br/om-prince",
+   "emoji": "🤴"
+  },
+  {
+   "id": 92,
+   "name": "Love",
+   "icon": "br/om-two-hearts",
+   "emoji": "💕"
+  },
+  {
+   "id": 93,
+   "name": "Math",
+   "icon": "br/om-divide",
+   "emoji": "➗"
+  },
+  {
+   "id": 94,
+   "name": "Meme",
+   "icon": "br/om-frog",
+   "emoji": "🐸"
+  },
+  {
+   "id": 95,
+   "name": "Movie",
+   "icon": "br/om-clapper-board",
+   "emoji": "🎬"
+  },
+  {
+   "id": 96,
+   "name": "Pizza",
+   "icon": "br/om-pizza",
+   "emoji": "🍕"
+  },
+  {
+   "id": 97,
+   "name": "Rain",
+   "icon": "br/om-cloud-with-rain",
+   "emoji": "🌧️"
+  },
+  {
+   "id": 98,
+   "name": "Rich",
+   "icon": "br/om-money-mouth-face",
+   "emoji": "🤑"
+  },
+  {
+   "id": 99,
+   "name": "Sad",
+   "icon": "br/om-crying-face",
+   "emoji": "😢"
+  },
+  {
+   "id": 100,
+   "name": "Sleep",
+   "icon": "br/om-sleeping-face",
+   "emoji": "😴"
+  },
+  {
+   "id": 101,
+   "name": "Student",
+   "icon": "br/om-backpack",
+   "emoji": "🎒"
+  },
+  {
+   "id": 102,
+   "name": "Suit",
+   "icon": "br/om-person-in-tuxedo",
+   "emoji": "🤵"
+  },
+  {
+   "id": 103,
+   "name": "Taco",
+   "icon": "br/om-taco",
+   "emoji": "🌮"
+  },
+  {
+   "id": 104,
+   "name": "Teacher",
+   "icon": "br/om-teacher",
+   "emoji": "🧑‍🏫"
+  },
+  {
+   "id": 105,
+   "name": "Time",
+   "icon": "br/om-hourglass-not-done",
+   "emoji": "⏳"
+  },
+  {
+   "id": 106,
+   "name": "Vibe",
+   "icon": "br/om-sparkles",
+   "emoji": "✨"
+  },
+  {
+   "id": 107,
+   "name": "Weird",
+   "icon": "br/om-zany-face",
+   "emoji": "🤪"
+  },
+  {
+   "id": 108,
+   "name": "Wolf",
+   "icon": "br/om-wolf",
+   "emoji": "🐺"
+  },
+  {
+   "id": 109,
+   "name": "Aura",
+   "icon": "br/om-crystal-ball",
+   "emoji": "🔮"
+  },
+  {
+   "id": 110,
+   "name": "Brainrot",
+   "icon": "br/om-melting-face",
+   "emoji": "🫠"
+  },
+  {
+   "id": 111,
+   "name": "Chill Guy",
+   "icon": "br/om-dog",
+   "emoji": "🐕"
+  },
+  {
+   "id": 112,
+   "name": "FYP",
+   "icon": "br/om-mobile-phone-with-arrow",
+   "emoji": "📲"
+  },
+  {
+   "id": 113,
+   "name": "Mewing",
+   "icon": "br/om-shushing-face",
+   "emoji": "🤫"
+  },
+  {
+   "id": 114,
+   "name": "Ohio",
+   "icon": "br/om-ear-of-corn",
+   "emoji": "🌽"
+  },
+  {
+   "id": 115,
+   "name": "Patrick Bateman",
+   "icon": "br/om-axe",
+   "emoji": "🪓"
+  },
+  {
+   "id": 116,
+   "name": "Rizz",
+   "icon": "br/om-smirking-face",
+   "emoji": "😏"
+  },
+  {
+   "id": 117,
+   "name": "Sigma",
+   "icon": "br/om-moai",
+   "emoji": "🗿"
+  },
+  {
+   "id": 118,
+   "name": "Slay",
+   "icon": "br/om-nail-polish",
+   "emoji": "💅"
+  },
+  {
+   "id": 119,
+   "name": "W",
+   "icon": "br/om-trophy",
+   "emoji": "🏆"
+  },
+  {
+   "id": 120,
+   "name": "100 Men Vs 1 Gorilla",
+   "icon": "br/om-boxing-glove",
+   "emoji": "🥊"
+  },
+  {
+   "id": 121,
+   "name": "American Psycho",
+   "icon": "br/om-videocassette",
+   "emoji": "📼"
+  },
+  {
+   "id": 122,
+   "name": "Aura Farming",
+   "icon": "br/om-sheaf-of-rice",
+   "emoji": "🌾"
+  },
+  {
+   "id": 123,
+   "name": "Bed Rotting",
+   "icon": "br/om-wilted-flower",
+   "emoji": "🥀"
+  },
+  {
+   "id": 124,
+   "name": "Beige Flag",
+   "icon": "br/om-white-flag",
+   "emoji": "🏳️"
+  },
+  {
+   "id": 125,
+   "name": "Boy Math",
+   "icon": "br/om-abacus",
+   "emoji": "🧮"
+  },
+  {
+   "id": 126,
+   "name": "Brat Summer",
+   "icon": "br/om-green-apple",
+   "emoji": "🍏"
+  },
+  {
+   "id": 127,
+   "name": "Canon Event",
+   "icon": "br/om-spider-web",
+   "emoji": "🕸️"
+  },
+  {
+   "id": 128,
+   "name": "Chronically Online",
+   "icon": "br/om-technologist",
+   "emoji": "🧑‍💻"
+  },
+  {
+   "id": 129,
+   "name": "Delulu",
+   "icon": "br/om-unicorn",
+   "emoji": "🦄"
+  },
+  {
+   "id": 130,
+   "name": "Doomscrolling",
+   "icon": "br/om-face-with-spiral-eyes",
+   "emoji": "😵‍💫"
+  },
+  {
+   "id": 131,
+   "name": "Ghosting",
+   "icon": "br/om-dotted-line-face",
+   "emoji": "🫥"
+  },
+  {
+   "id": 132,
+   "name": "Girl Math",
+   "icon": "br/om-shopping-bags",
+   "emoji": "🛍️"
+  },
+  {
+   "id": 133,
+   "name": "Green Flag",
+   "icon": "br/om-green-circle",
+   "emoji": "🟢"
+  },
+  {
+   "id": 134,
+   "name": "Infinite Aura",
+   "icon": "br/om-infinity",
+   "emoji": "♾️"
+  },
+  {
+   "id": 135,
+   "name": "Just A Chill Guy",
+   "icon": "br/om-relieved-face",
+   "emoji": "😌"
+  },
+  {
+   "id": 136,
+   "name": "LeBron James",
+   "icon": "br/om-goat",
+   "emoji": "🐐"
+  },
+  {
+   "id": 137,
+   "name": "Let Him Cook",
+   "icon": "br/om-cooking",
+   "emoji": "🍳"
+  },
+  {
+   "id": 138,
+   "name": "Main Character",
+   "icon": "br/om-glowing-star",
+   "emoji": "🌟"
+  },
+  {
+   "id": 139,
+   "name": "Negative Aura",
+   "icon": "br/om-chart-decreasing",
+   "emoji": "📉"
+  },
+  {
+   "id": 140,
+   "name": "Only In Ohio",
+   "icon": "br/om-flying-saucer",
+   "emoji": "🛸"
+  },
+  {
+   "id": 141,
+   "name": "Quiet Luxury",
+   "icon": "br/om-coat",
+   "emoji": "🧥"
+  },
+  {
+   "id": 142,
+   "name": "Red Flag",
+   "icon": "br/om-triangular-flag",
+   "emoji": "🚩"
+  },
+  {
+   "id": 143,
+   "name": "Side Quest",
+   "icon": "br/om-world-map",
+   "emoji": "🗺️"
+  },
+  {
+   "id": 144,
+   "name": "The Ick",
+   "icon": "br/om-nauseated-face",
+   "emoji": "🤢"
+  },
+  {
+   "id": 145,
+   "name": "Touch Grass",
+   "icon": "br/om-herb",
+   "emoji": "🌿"
+  },
+  {
+   "id": 146,
+   "name": "Unspoken Rizz",
+   "icon": "br/om-face-without-mouth",
+   "emoji": "😶"
+  },
+  {
+   "id": 147,
+   "name": "Very Demure",
+   "icon": "br/om-ribbon",
+   "emoji": "🎀"
+  },
+  {
+   "id": 148,
+   "name": "Who Let Him Cook",
+   "icon": "br/om-fire-engine",
+   "emoji": "🚒"
+  },
+  {
+   "id": 149,
+   "name": "You Are My Sunshine",
+   "icon": "br/om-sun-with-face",
+   "emoji": "🌞"
+  },
+  {
+   "id": 150,
+   "name": "Throne",
+   "icon": "br/om-person-with-crown",
+   "emoji": "🫅"
+  },
+  {
+   "id": 151,
+   "name": "Hygiene",
+   "icon": "br/om-soap",
+   "emoji": "🧼"
+  },
+  {
+   "id": 152,
+   "name": "Clogged",
+   "icon": "br/om-plunger",
+   "emoji": "🪠"
+  },
+  {
+   "id": 153,
+   "name": "Skibidi Toilet",
+   "icon": "br/om-water-closet",
+   "emoji": "🚾"
+  },
+  {
+   "id": 154,
+   "name": "Ew",
+   "icon": "br/om-face-with-peeking-eye",
+   "emoji": "🫣"
+  },
+  {
+   "id": 155,
+   "name": "Splash",
+   "icon": "br/om-sweat-droplets",
+   "emoji": "💦"
+  },
+  {
+   "id": 156,
+   "name": "Brick",
+   "icon": "br/om-brick",
+   "emoji": "🧱"
+  },
+  {
+   "id": 157,
+   "name": "World Cup",
+   "icon": "br/om-1st-place-medal",
+   "emoji": "🥇"
+  },
+  {
+   "id": 158,
+   "name": "Christmas Tree",
+   "icon": "br/om-christmas-tree",
+   "emoji": "🎄"
+  },
+  {
+   "id": 159,
+   "name": "Volleyball",
+   "icon": "br/om-volleyball",
+   "emoji": "🏐"
+  },
+  {
+   "id": 160,
+   "name": "Sunburn",
+   "icon": "br/om-hot-face",
+   "emoji": "🥵"
+  },
+  {
+   "id": 161,
+   "name": "Spill The Tea",
+   "icon": "br/om-teapot",
+   "emoji": "🫖"
+  },
+  {
+   "id": 162,
+   "name": "Boss Babe",
+   "icon": "br/om-woman-office-worker",
+   "emoji": "👩‍💼"
+  },
+  {
+   "id": 163,
+   "name": "Big Back",
+   "icon": "br/om-poultry-leg",
+   "emoji": "🍗"
+  },
+  {
+   "id": 164,
+   "name": "Stocks",
+   "icon": "br/om-chart-increasing",
+   "emoji": "📈"
+  },
+  {
+   "id": 165,
+   "name": "Calories",
+   "icon": "br/om-doughnut",
+   "emoji": "🍩"
+  },
+  {
+   "id": 166,
+   "name": "Mukbang",
+   "icon": "br/om-steaming-bowl",
+   "emoji": "🍜"
+  },
+  {
+   "id": 167,
+   "name": "Tax",
+   "icon": "br/om-receipt",
+   "emoji": "🧾"
+  },
+  {
+   "id": 168,
+   "name": "Selfie",
+   "icon": "br/om-selfie",
+   "emoji": "🤳"
+  },
+  {
+   "id": 169,
+   "name": "Dating App",
+   "icon": "br/om-heart-with-arrow",
+   "emoji": "💘"
+  },
+  {
+   "id": 170,
+   "name": "Horror Story",
+   "icon": "br/om-open-book",
+   "emoji": "📖"
+  },
+  {
+   "id": 171,
+   "name": "Haunted",
+   "icon": "br/om-face-screaming-in-fear",
+   "emoji": "😱"
+  },
+  {
+   "id": 172,
+   "name": "Fanfic",
+   "icon": "br/om-writing-hand",
+   "emoji": "✍️"
+  },
+  {
+   "id": 173,
+   "name": "Diary",
+   "icon": "br/om-notebook-with-decorative-cover",
+   "emoji": "📔"
+  },
+  {
+   "id": 174,
+   "name": "Confiscated",
+   "icon": "br/om-prohibited",
+   "emoji": "🚫"
+  },
+  {
+   "id": 175,
+   "name": "Wired",
+   "icon": "br/om-exploding-head",
+   "emoji": "🤯"
+  },
+  {
+   "id": 176,
+   "name": "Couch Potato",
+   "icon": "br/om-potato",
+   "emoji": "🥔"
+  },
+  {
+   "id": 177,
+   "name": "Baby",
+   "icon": "br/om-baby",
+   "emoji": "👶"
+  },
+  {
+   "id": 178,
+   "name": "Morning News",
+   "icon": "br/om-newspaper",
+   "emoji": "📰"
+  },
+  {
+   "id": 179,
+   "name": "Latte Art",
+   "icon": "br/om-artist-palette",
+   "emoji": "🎨"
+  },
+  {
+   "id": 180,
+   "name": "Gaming Chair",
+   "icon": "br/om-seat",
+   "emoji": "💺"
+  },
+  {
+   "id": 181,
+   "name": "Sandwich",
+   "icon": "br/om-sandwich",
+   "emoji": "🥪"
+  },
+  {
+   "id": 182,
+   "name": "Avocado Toast",
+   "icon": "br/om-avocado",
+   "emoji": "🥑"
+  },
+  {
+   "id": 183,
+   "name": "Farming Sim",
+   "icon": "br/om-sunflower",
+   "emoji": "🌻"
+  },
+  {
+   "id": 184,
+   "name": "Gamer Fuel",
+   "icon": "br/om-cup-with-straw",
+   "emoji": "🥤"
+  },
+  {
+   "id": 185,
+   "name": "Birthday",
+   "icon": "br/om-partying-face",
+   "emoji": "🥳"
+  },
+  {
+   "id": 186,
+   "name": "Roast",
+   "icon": "br/om-meat-on-bone",
+   "emoji": "🍖"
+  },
+  {
+   "id": 187,
+   "name": "Fish Fry",
+   "icon": "br/om-fried-shrimp",
+   "emoji": "🍤"
+  },
+  {
+   "id": 188,
+   "name": "Fish Face",
+   "icon": "br/om-blowfish",
+   "emoji": "🐡"
+  },
+  {
+   "id": 189,
+   "name": "Steam",
+   "icon": "br/om-hot-springs",
+   "emoji": "♨️"
+  },
+  {
+   "id": 190,
+   "name": "Paper Boat",
+   "icon": "br/om-sailboat",
+   "emoji": "⛵"
+  },
+  {
+   "id": 191,
+   "name": "Shark",
+   "icon": "br/om-shark",
+   "emoji": "🦈"
+  },
+  {
+   "id": 192,
+   "name": "Mask",
+   "icon": "br/om-performing-arts",
+   "emoji": "🎭"
+  },
+  {
+   "id": 193,
+   "name": "Screen Time",
+   "icon": "br/om-bright-button",
+   "emoji": "🔆"
+  },
+  {
+   "id": 194,
+   "name": "Night Owl",
+   "icon": "br/om-owl",
+   "emoji": "🦉"
+  },
+  {
+   "id": 195,
+   "name": "Midnight Snack",
+   "icon": "br/om-chocolate-bar",
+   "emoji": "🍫"
+  },
+  {
+   "id": 196,
+   "name": "Water Damage",
+   "icon": "br/om-no-mobile-phones",
+   "emoji": "📵"
+  },
+  {
+   "id": 197,
+   "name": "Say Cheese",
+   "icon": "br/om-camera-with-flash",
+   "emoji": "📸"
+  },
+  {
+   "id": 198,
+   "name": "Comfort Food",
+   "icon": "br/om-pot-of-food",
+   "emoji": "🍲"
+  },
+  {
+   "id": 199,
+   "name": "3 AM Thoughts",
+   "icon": "br/om-new-moon-face",
+   "emoji": "🌚"
+  },
+  {
+   "id": 200,
+   "name": "Ice Bath",
+   "icon": "br/om-bathtub",
+   "emoji": "🛁"
+  },
+  {
+   "id": 201,
+   "name": "Speedrun",
+   "icon": "br/om-stopwatch",
+   "emoji": "⏱️"
+  },
+  {
+   "id": 202,
+   "name": "Frozen",
+   "icon": "br/om-snowflake",
+   "emoji": "❄️"
+  },
+  {
+   "id": 203,
+   "name": "Hockey",
+   "icon": "br/om-ice-hockey",
+   "emoji": "🏒"
+  },
+  {
+   "id": 204,
+   "name": "Ice Cream",
+   "icon": "br/om-soft-ice-cream",
+   "emoji": "🍦"
+  },
+  {
+   "id": 205,
+   "name": "Chess",
+   "icon": "br/om-chess-pawn",
+   "emoji": "♟️"
+  },
+  {
+   "id": 206,
+   "name": "Vegetable",
+   "icon": "br/om-broccoli",
+   "emoji": "🥦"
+  },
+  {
+   "id": 207,
+   "name": "Genius",
+   "icon": "br/om-light-bulb",
+   "emoji": "💡"
+  },
+  {
+   "id": 208,
+   "name": "Garden Bed",
+   "icon": "br/om-potted-plant",
+   "emoji": "🪴"
+  },
+  {
+   "id": 209,
+   "name": "NPC",
+   "icon": "br/om-person-standing",
+   "emoji": "🧍"
+  },
+  {
+   "id": 210,
+   "name": "Puppy Love",
+   "icon": "br/om-growing-heart",
+   "emoji": "💗"
+  },
+  {
+   "id": 211,
+   "name": "Bone",
+   "icon": "br/om-bone",
+   "emoji": "🦴"
+  },
+  {
+   "id": 212,
+   "name": "Late",
+   "icon": "br/om-person-running",
+   "emoji": "🏃"
+  },
+  {
+   "id": 213,
+   "name": "Bestie",
+   "icon": "br/om-people-with-bunny-ears",
+   "emoji": "👯"
+  },
+  {
+   "id": 214,
+   "name": "Ride Or Die",
+   "icon": "br/om-motorcycle",
+   "emoji": "🏍️"
+  },
+  {
+   "id": 215,
+   "name": "Sandcastle",
+   "icon": "br/om-castle",
+   "emoji": "🏰"
+  },
+  {
+   "id": 216,
+   "name": "Heartbeat",
+   "icon": "br/om-beating-heart",
+   "emoji": "💓"
+  },
+  {
+   "id": 217,
+   "name": "Cat Mom",
+   "icon": "br/om-cat",
+   "emoji": "🐈"
+  },
+  {
+   "id": 218,
+   "name": "Walk",
+   "icon": "br/om-person-walking",
+   "emoji": "🚶"
+  },
+  {
+   "id": 219,
+   "name": "Puss In Boots",
+   "icon": "br/om-womans-boot",
+   "emoji": "👢"
+  },
+  {
+   "id": 220,
+   "name": "Laser Pointer",
+   "icon": "br/om-red-circle",
+   "emoji": "🔴"
+  },
+  {
+   "id": 221,
+   "name": "Hike",
+   "icon": "br/om-hiking-boot",
+   "emoji": "🥾"
+  },
+  {
+   "id": 222,
+   "name": "AFK",
+   "icon": "br/om-zzz",
+   "emoji": "💤"
+  },
+  {
+   "id": 223,
+   "name": "Streamer",
+   "icon": "br/om-studio-microphone",
+   "emoji": "🎙️"
+  },
+  {
+   "id": 224,
+   "name": "Banger",
+   "icon": "br/om-collision",
+   "emoji": "💥"
+  },
+  {
+   "id": 225,
+   "name": "Moosic",
+   "icon": "br/om-musical-notes",
+   "emoji": "🎶"
+  },
+  {
+   "id": 226,
+   "name": "Campfire",
+   "icon": "br/om-camping",
+   "emoji": "🏕️"
+  },
+  {
+   "id": 227,
+   "name": "Steak",
+   "icon": "br/om-cut-of-meat",
+   "emoji": "🥩"
+  },
+  {
+   "id": 228,
+   "name": "Lava",
+   "icon": "br/om-volcano",
+   "emoji": "🌋"
+  },
+  {
+   "id": 229,
+   "name": "Concert",
+   "icon": "br/om-guitar",
+   "emoji": "🎸"
+  },
+  {
+   "id": 230,
+   "name": "Storm",
+   "icon": "br/om-cloud-with-lightning-and-rain",
+   "emoji": "⛈️"
+  },
+  {
+   "id": 231,
+   "name": "Country Music",
+   "icon": "br/om-cowboy-hat-face",
+   "emoji": "🤠"
+  },
+  {
+   "id": 232,
+   "name": "Earthquake",
+   "icon": "br/om-shaking-face",
+   "emoji": "🫨"
+  },
+  {
+   "id": 233,
+   "name": "Robot",
+   "icon": "br/om-robot",
+   "emoji": "🤖"
+  },
+  {
+   "id": 234,
+   "name": "Cyborg",
+   "icon": "br/om-mechanical-arm",
+   "emoji": "🦾"
+  },
+  {
+   "id": 235,
+   "name": "Toxic",
+   "icon": "br/om-radioactive",
+   "emoji": "☢️"
+  },
+  {
+   "id": 236,
+   "name": "Overthinking",
+   "icon": "br/om-cyclone",
+   "emoji": "🌀"
+  },
+  {
+   "id": 237,
+   "name": "Embarrassed",
+   "icon": "br/om-flushed-face",
+   "emoji": "😳"
+  },
+  {
+   "id": 238,
+   "name": "Gigachad",
+   "icon": "br/om-person-beard",
+   "emoji": "🧔"
+  },
+  {
+   "id": 239,
+   "name": "Head In The Clouds",
+   "icon": "br/om-face-in-clouds",
+   "emoji": "😶‍🌫️"
+  },
+  {
+   "id": 240,
+   "name": "Weather Forecast",
+   "icon": "br/om-sun-behind-rain-cloud",
+   "emoji": "🌦️"
+  },
+  {
+   "id": 241,
+   "name": "Brain Fog",
+   "icon": "br/om-fog",
+   "emoji": "🌫️"
+  },
+  {
+   "id": 242,
+   "name": "5 AM Club",
+   "icon": "br/om-sunrise-over-mountains",
+   "emoji": "🌄"
+  },
+  {
+   "id": 243,
+   "name": "Alarm",
+   "icon": "br/om-bell",
+   "emoji": "🔔"
+  },
+  {
+   "id": 244,
+   "name": "Tweet",
+   "icon": "br/om-baby-chick",
+   "emoji": "🐤"
+  },
+  {
+   "id": 245,
+   "name": "Silicon Valley",
+   "icon": "br/om-office-building",
+   "emoji": "🏢"
+  },
+  {
+   "id": 246,
+   "name": "Cuckoo Clock",
+   "icon": "br/om-mantelpiece-clock",
+   "emoji": "🕰️"
+  },
+  {
+   "id": 247,
+   "name": "Deadline",
+   "icon": "br/om-calendar",
+   "emoji": "📅"
+  },
+  {
+   "id": 248,
+   "name": "Copypasta",
+   "icon": "br/om-spaghetti",
+   "emoji": "🍝"
+  },
+  {
+   "id": 249,
+   "name": "Salty",
+   "icon": "br/om-face-with-steam-from-nose",
+   "emoji": "😤"
+  },
+  {
+   "id": 250,
+   "name": "Salary",
+   "icon": "br/om-briefcase",
+   "emoji": "💼"
+  },
+  {
+   "id": 251,
+   "name": "Taco Tuesday",
+   "icon": "br/om-party-popper",
+   "emoji": "🎉"
+  },
+  {
+   "id": 252,
+   "name": "Business Lunch",
+   "icon": "br/om-green-salad",
+   "emoji": "🥗"
+  },
+  {
+   "id": 253,
+   "name": "Caviar",
+   "icon": "br/om-jar",
+   "emoji": "🫙"
+  },
+  {
+   "id": 254,
+   "name": "Salt Bae",
+   "icon": "br/om-person-tipping-hand",
+   "emoji": "💁"
+  },
+  {
+   "id": 255,
+   "name": "Area 51",
+   "icon": "br/om-military-helmet",
+   "emoji": "🪖"
+  },
+  {
+   "id": 256,
+   "name": "Joker",
+   "icon": "br/om-joker",
+   "emoji": "🃏"
+  },
+  {
+   "id": 257,
+   "name": "Nightmare",
+   "icon": "br/om-angry-face-with-horns",
+   "emoji": "👿"
+  },
+  {
+   "id": 258,
+   "name": "Galaxy Brain",
+   "icon": "br/om-milky-way",
+   "emoji": "🌌"
+  },
+  {
+   "id": 259,
+   "name": "Sleep Paralysis",
+   "icon": "br/om-face-with-crossed-out-eyes",
+   "emoji": "😵"
+  },
+  {
+   "id": 260,
+   "name": "Clown Behavior",
+   "icon": "br/om-circus-tent",
+   "emoji": "🎪"
+  },
+  {
+   "id": 261,
+   "name": "Quirky",
+   "icon": "br/om-upside-down-face",
+   "emoji": "🙃"
+  },
+  {
+   "id": 262,
+   "name": "Pets",
+   "icon": "br/om-paw-prints",
+   "emoji": "🐾"
+  },
+  {
+   "id": 263,
+   "name": "Howl",
+   "icon": "br/om-full-moon",
+   "emoji": "🌕"
+  },
+  {
+   "id": 264,
+   "name": "Playlist",
+   "icon": "br/om-radio",
+   "emoji": "📻"
+  },
+  {
+   "id": 265,
+   "name": "Cat Jam",
+   "icon": "br/om-cat-with-wry-smile",
+   "emoji": "😼"
+  },
+  {
+   "id": 266,
+   "name": "Who Let The Dogs Out",
+   "icon": "br/om-service-dog",
+   "emoji": "🐕‍🦺"
+  },
+  {
+   "id": 267,
+   "name": "Zoomies",
+   "icon": "br/om-dashing-away",
+   "emoji": "💨"
+  },
+  {
+   "id": 268,
+   "name": "Dog Video",
+   "icon": "br/om-video-camera",
+   "emoji": "📹"
+  },
+  {
+   "id": 269,
+   "name": "Oxygen",
+   "icon": "br/om-bubbles",
+   "emoji": "🫧"
+  },
+  {
+   "id": 270,
+   "name": "Pressed Flower",
+   "icon": "br/om-cherry-blossom",
+   "emoji": "🌸"
+  },
+  {
+   "id": 271,
+   "name": "Homework",
+   "icon": "br/om-memo",
+   "emoji": "📝"
+  },
+  {
+   "id": 272,
+   "name": "Science Class",
+   "icon": "br/om-microscope",
+   "emoji": "🔬"
+  },
+  {
+   "id": 273,
+   "name": "Air Head",
+   "icon": "br/om-feather",
+   "emoji": "🪶"
+  },
+  {
+   "id": 274,
+   "name": "Field Trip",
+   "icon": "br/om-bus",
+   "emoji": "🚌"
+  },
+  {
+   "id": 275,
+   "name": "Recess",
+   "icon": "br/om-playground-slide",
+   "emoji": "🛝"
+  },
+  {
+   "id": 276,
+   "name": "Pledge",
+   "icon": "br/om-saluting-face",
+   "emoji": "🫡"
+  },
+  {
+   "id": 277,
+   "name": "Burnout",
+   "icon": "br/om-weary-face",
+   "emoji": "😩"
+  },
+  {
+   "id": 278,
+   "name": "Regret",
+   "icon": "br/om-hot-pepper",
+   "emoji": "🌶️"
+  },
+  {
+   "id": 279,
+   "name": "Earworm",
+   "icon": "br/om-bug",
+   "emoji": "🐛"
+  },
+  {
+   "id": 280,
+   "name": "Sandstorm",
+   "icon": "br/om-tornado",
+   "emoji": "🌪️"
+  },
+  {
+   "id": 281,
+   "name": "Recipe",
+   "icon": "br/om-scroll",
+   "emoji": "📜"
+  },
+  {
+   "id": 282,
+   "name": "Stinky",
+   "icon": "br/om-skunk",
+   "emoji": "🦨"
+  },
+  {
+   "id": 283,
+   "name": "Pizza Box",
+   "icon": "br/om-package",
+   "emoji": "📦"
+  },
+  {
+   "id": 284,
+   "name": "Pizza Delivery",
+   "icon": "br/om-motor-scooter",
+   "emoji": "🛵"
+  },
+  {
+   "id": 285,
+   "name": "Fast Food",
+   "icon": "br/om-french-fries",
+   "emoji": "🍟"
+  },
+  {
+   "id": 286,
+   "name": "Scam",
+   "icon": "br/om-lying-face",
+   "emoji": "🤥"
+  },
+  {
+   "id": 287,
+   "name": "Invasion",
+   "icon": "br/om-alien-monster",
+   "emoji": "👾"
+  },
+  {
+   "id": 288,
+   "name": "Creepy Clown",
+   "icon": "br/om-balloon",
+   "emoji": "🎈"
+  },
+  {
+   "id": 289,
+   "name": "Loan Shark",
+   "icon": "br/om-money-with-wings",
+   "emoji": "💸"
+  },
+  {
+   "id": 290,
+   "name": "Crypto",
+   "icon": "br/om-coin",
+   "emoji": "🪙"
+  },
+  {
+   "id": 291,
+   "name": "Politics",
+   "icon": "br/om-ballot-box-with-ballot",
+   "emoji": "🗳️"
+  },
+  {
+   "id": 292,
+   "name": "Pop Music",
+   "icon": "br/om-mirror-ball",
+   "emoji": "🪩"
+  },
+  {
+   "id": 293,
+   "name": "K-Pop",
+   "icon": "br/om-optical-disk",
+   "emoji": "💿"
+  },
+  {
+   "id": 294,
+   "name": "Love Song",
+   "icon": "br/om-love-letter",
+   "emoji": "💌"
+  },
+  {
+   "id": 295,
+   "name": "Prom King",
+   "icon": "br/om-man-dancing",
+   "emoji": "🕺"
+  },
+  {
+   "id": 296,
+   "name": "Date Night",
+   "icon": "br/om-rose",
+   "emoji": "🌹"
+  },
+  {
+   "id": 297,
+   "name": "Diva",
+   "icon": "br/om-microphone",
+   "emoji": "🎤"
+  },
+  {
+   "id": 298,
+   "name": "Anime",
+   "icon": "br/om-fish-cake-with-swirl",
+   "emoji": "🍥"
+  },
+  {
+   "id": 299,
+   "name": "Winter",
+   "icon": "br/om-snowman-without-snow",
+   "emoji": "⛄"
+  },
+  {
+   "id": 300,
+   "name": "Hero",
+   "icon": "br/om-superhero",
+   "emoji": "🦸"
+  },
+  {
+   "id": 301,
+   "name": "Night Out",
+   "icon": "br/om-woman-dancing",
+   "emoji": "💃"
+  },
+  {
+   "id": 302,
+   "name": "Pep Talk",
+   "icon": "br/om-megaphone",
+   "emoji": "📣"
+  },
+  {
+   "id": 303,
+   "name": "Jawline",
+   "icon": "br/om-gem-stone",
+   "emoji": "💎"
+  },
+  {
+   "id": 304,
+   "name": "Nerd",
+   "icon": "br/om-nerd-face",
+   "emoji": "🤓"
+  },
+  {
+   "id": 305,
+   "name": "Smile",
+   "icon": "br/om-beaming-face-with-smiling-eyes",
+   "emoji": "😁"
+  },
+  {
+   "id": 306,
+   "name": "Ego",
+   "icon": "br/om-peacock",
+   "emoji": "🦚"
+  },
+  {
+   "id": 307,
+   "name": "Yap",
+   "icon": "br/om-speaking-head",
+   "emoji": "🗣️"
+  },
+  {
+   "id": 308,
+   "name": "Jungle",
+   "icon": "br/om-palm-tree",
+   "emoji": "🌴"
+  },
+  {
+   "id": 309,
+   "name": "Unga Bunga",
+   "icon": "br/om-mammoth",
+   "emoji": "🦣"
+  },
+  {
+   "id": 310,
+   "name": "Carpenter",
+   "icon": "br/om-hammer",
+   "emoji": "🔨"
+  },
+  {
+   "id": 311,
+   "name": "Farmer",
+   "icon": "br/om-farmer",
+   "emoji": "🧑‍🌾"
+  },
+  {
+   "id": 312,
+   "name": "Forest",
+   "icon": "br/om-evergreen-tree",
+   "emoji": "🌲"
+  },
+  {
+   "id": 313,
+   "name": "Monke",
+   "icon": "br/om-see-no-evil-monkey",
+   "emoji": "🙈"
+  },
+  {
+   "id": 314,
+   "name": "Home",
+   "icon": "br/om-house-with-garden",
+   "emoji": "🏡"
+  },
+  {
+   "id": 315,
+   "name": "Texting",
+   "icon": "br/om-speech-balloon",
+   "emoji": "💬"
+  },
+  {
+   "id": 316,
+   "name": "Moon Landing",
+   "icon": "br/om-rocket",
+   "emoji": "🚀"
+  },
+  {
+   "id": 317,
+   "name": "Infomercial",
+   "icon": "br/om-loudspeaker",
+   "emoji": "📢"
+  },
+  {
+   "id": 318,
+   "name": "Royal Wave",
+   "icon": "br/om-waving-hand",
+   "emoji": "👋"
+  },
+  {
+   "id": 319,
+   "name": "Croissant",
+   "icon": "br/om-croissant",
+   "emoji": "🥐"
+  },
+  {
+   "id": 320,
+   "name": "Iced Out",
+   "icon": "br/om-ring",
+   "emoji": "💍"
+  },
+  {
+   "id": 321,
+   "name": "Film Bro",
+   "icon": "br/om-film-frames",
+   "emoji": "🎞️"
+  }
+ ]
+}

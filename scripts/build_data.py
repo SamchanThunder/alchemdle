@@ -4,7 +4,7 @@ Builds the game data.
 
 Outputs: data/elements.json, data/recipes.json, data/daily_puzzles.json, public/icons/*.svg
 
-Usage: python scripts/build_data.py [--days 366] [--start 2026-11-17] [--seed 1729] [--offline]
+Usage: python scripts/build_data.py [--days 366] [--start 2026-11-18] [--seed 1729] [--offline]
 
 Sources (cached in .cache/): Infinite Craft recipes, OpenMoji, game-icons.net.
 
@@ -886,7 +886,7 @@ def assign_difficulty(puzzles):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--days", type=int, default=366)
-    ap.add_argument("--start", default="2026-11-17")
+    ap.add_argument("--start", default="2026-11-18")
     ap.add_argument("--seed", type=int, default=1729)
     ap.add_argument("--offline", action="store_true")
     args = ap.parse_args()
