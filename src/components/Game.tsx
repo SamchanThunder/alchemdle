@@ -431,19 +431,6 @@ export default function Game() {
                 <>&nbsp;</>
               )}
             </p>
-            <div className="mode-switch" role="tablist" aria-label="Game mode">
-              {(["classic", "brainrot"] as const).map((k) => (
-                <button
-                  key={k}
-                  role="tab"
-                  aria-selected={m === k}
-                  className={`mode-tab mode-tab-${k}${m === k ? " active" : ""}`}
-                  onClick={() => switchMode(k)}
-                >
-                  <span aria-hidden>{MODES[k].icon}</span> {MODES[k].label}
-                </button>
-              ))}
-            </div>
           </div>
           <div className="hud-icons">
             <button className="icon-btn" onClick={() => setPanel("archive")} aria-label="Archive" title="Archive & practice">
@@ -453,6 +440,20 @@ export default function Game() {
               <svg viewBox="0 0 24 24" aria-hidden><path d="M5 20V11 M12 20V5 M19 20v-6 M3 20h18" /></svg>
             </button>
           </div>
+        </div>
+
+        <div className="mode-switch" role="tablist" aria-label="Game mode">
+          {(["classic", "brainrot"] as const).map((k) => (
+            <button
+              key={k}
+              role="tab"
+              aria-selected={m === k}
+              className={`mode-tab mode-tab-${k}${m === k ? " active" : ""}`}
+              onClick={() => switchMode(k)}
+            >
+              <span aria-hidden>{MODES[k].icon}</span> {MODES[k].label}
+            </button>
+          ))}
         </div>
 
         <div className="hud-row">

@@ -2142,6 +2142,7 @@ a {
 /* ---------- mode switch ------------------------------------------------- */
 
 .mode-switch {
+  align-self: center;
   display: inline-flex;
   gap: 2px;
   margin-top: 2px;
@@ -2211,6 +2212,13 @@ a {
   .mode-tab {
     font-size: 17px;
     padding: 7px 22px;
+  }
+}
+
+@media (max-width: 640px) {
+  .mode-tab {
+    font-size: 14px;
+    padding: 6px 17px;
   }
 }
 
