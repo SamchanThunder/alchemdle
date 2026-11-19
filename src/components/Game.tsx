@@ -6,6 +6,7 @@ import { indexUrl, puzzleUrl } from "@/lib/config";
 import { formatDate, todayPuzzleNumber } from "@/lib/date";
 import { freshBoard, hasMoves, newRun, pairKey, reactionTable } from "@/lib/game";
 import { MODES, otherMode, type Mode } from "@/lib/mode";
+import { play, setMuted } from "@/lib/sound";
 import { load, save } from "@/lib/storage";
 import { rating } from "@/lib/titles";
 import type { PuzzleBundle, PuzzleIndex, Run, Stats } from "@/lib/types";
@@ -49,6 +50,7 @@ export default function Game() {
   const [bursts, setBursts] = useState<Burst[]>([]);
   const [toast, setToast] = useState<Toast | null>(null);
   const [flash, setFlash] = useState(0);
+  const [muted, setMute] = useState(false);
 
   const benchRef = useRef<HTMLDivElement>(null);
   const boardRef = useRef<HTMLDivElement>(null);
@@ -67,6 +69,9 @@ export default function Game() {
 
   // ---- boot: mode from the URL (classic by default) ----
   useEffect(() => {
+    const m0 = load("muted", false);
+    setMute(m0);
+    setMuted(m0);
     setMode(new URLSearchParams(window.location.search).get("mode") === "brainrot" ? "brainrot" : "classic");
   }, []);
 
@@ -233,6 +238,7 @@ export default function Game() {
     if (r === undefined) {
       setRun({ ...run, fizzles: run.fizzles + 1 });
       shake([u1, u2]);
+      play("fizzle", m === "brainrot");
       const line = copy.fizzles[(t1.id * 7 + t2.id * 13 + run.fizzles) % copy.fizzles.length];
       showToast(line(name(t1.id), name(t2.id)), "fizzle");
       return false;
@@ -252,6 +258,7 @@ export default function Game() {
       nextUid: ur + 1,
     };
     addBurst(u2, won);
+    play(won ? "win" : isNew ? "new" : "merge", m === "brainrot");
     setFlash((f) => f + 1);
     setRun(next);
     if (won) {
@@ -278,6 +285,7 @@ export default function Game() {
       log: [...run.log, { reset: true }],
     });
     setSelected(null);
+    play("reset");
     showToast(copy.restock, "info");
   }
 
@@ -294,6 +302,14 @@ export default function Game() {
     setPanel(null);
     if (sel && n === sel.n && sel.practice === (n !== todayN)) return;
     setSel({ mode: m, n, practice: n !== todayN });
+  }
+
+  function toggleMute() {
+    const next = !muted;
+    setMute(next);
+    setMuted(next);
+    save("muted", next);
+    if (!next) play("merge");
   }
 
   function switchMode(to: Mode) {
@@ -408,9 +424,23 @@ export default function Game() {
       {m === "brainrot" && <BrainrotSky />}
       <header className="hud">
         <div className="hud-top">
-          <button className="icon-btn" onClick={() => setPanel("help")} aria-label="How to play" title="How to play">
-            ?
-          </button>
+          <div className="hud-icons hud-icons-left">
+            <button className="icon-btn" onClick={() => setPanel("help")} aria-label="How to play" title="How to play">
+              ?
+            </button>
+            <button
+              className="icon-btn"
+              onClick={toggleMute}
+              aria-label={muted ? "Turn sound on" : "Mute sound"}
+              aria-pressed={muted}
+              title={muted ? "Sound off" : "Sound on"}
+            >
+              <svg viewBox="0 0 24 24" aria-hidden>
+                <path d="M4 9h4l5-4v14l-5-4H4z" />
+                {muted ? <path d="M17 9l5 6 M22 9l-5 6" /> : <path d="M16.5 8.5a5 5 0 0 1 0 7 M19.5 5.5a9 9 0 0 1 0 13" />}
+              </svg>
+            </button>
+          </div>
           <div className="title-block">
             <h1 className="title">
               <span className="title-flourish" aria-hidden>✦</span>
